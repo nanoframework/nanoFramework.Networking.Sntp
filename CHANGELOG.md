@@ -8,6 +8,7 @@
 
 **Documentation and other chores:**
 
+- 📦 Bumps nanoFramework.CoreLibrary from 1.0.1-preview106 to 1.0.1-preview118 [\#7](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/7)
 - Bump nanoFramework.CoreLibrary from 1.0.0-preview062 to 1.0.0-preview073 in /source [\#2](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/2)
 - 📦 Update mscorlib Nuget to 1.0.0-preview062 [\#1](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/1)
 
