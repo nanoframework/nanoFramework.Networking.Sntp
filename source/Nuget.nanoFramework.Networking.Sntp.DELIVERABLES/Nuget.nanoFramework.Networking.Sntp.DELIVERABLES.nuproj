@@ -38,9 +38,9 @@
   </ItemGroup>
   <ItemGroup>
     <Dependency Include="nanoFramework.CoreLibrary">
-      <Version>[1.0.0-preview073]</Version>
+      <Version>[1.0.1-preview118]</Version>
     </Dependency>
-  </ItemGroup>  
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>03FE7E57-992E-421E-A1A4-13EAEE114254</ProjectGuid>
   </PropertyGroup>
