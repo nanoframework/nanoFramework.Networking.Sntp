@@ -1,4 +1,4 @@
-[![NuGet](https://img.shields.io/nuget/dt/nanoFramework.Networking.Sntp.svg)]() [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=nanoframework/lib-nanoFramework.Networking.Sntp)](https://dependabot.com) [![#yourfirstpr](https://img.shields.io/badge/first--timers--only-friendly-blue.svg)](https://github.com/nanoframework/Home/blob/master/CONTRIBUTING.md)  [![Discord](https://img.shields.io/discord/478725473862549535.svg)](https://discord.gg/gCyBu8T)
+[![NuGet](https://img.shields.io/nuget/dt/nanoFramework.Networking.Sntp.svg)]() [![#yourfirstpr](https://img.shields.io/badge/first--timers--only-friendly-blue.svg)](https://github.com/nanoframework/Home/blob/master/CONTRIBUTING.md)  [![Discord](https://img.shields.io/discord/478725473862549535.svg)](https://discord.gg/gCyBu8T)
 
 
 ![nanoFramework logo](https://github.com/nanoframework/Home/blob/master/resources/logo/nanoFramework-repo-logo.png)
@@ -12,7 +12,7 @@
 
 | Component | Build Status | NuGet Package |
 |:-|---|---|
-| nanoFramework.Networking.Sntp |[![Build status](https://ci.appveyor.com/api/projects/status/3d2obh2u8r0peaa5?svg=true)](https://ci.appveyor.com/project/nfbot/lib-nanoframework-networking-sntp) | [![NuGet](https://img.shields.io/nuget/vpre/nanoFramework.Networking.Sntp.svg)](https://www.nuget.org/packages/nanoFramework.Networking.Sntp/)  |
+| nanoFramework.Networking.Sntp |[![Build status](https://ci.appveyor.com/api/projects/status/3d2obh2u8r0peaa5/branch/master?svg=true)](https://ci.appveyor.com/project/nfbot/lib-nanoframework-networking-sntp/branch/master) | [![NuGet](https://img.shields.io/nuget/vpre/nanoFramework.Networking.Sntp.svg)](https://www.nuget.org/packages/nanoFramework.Networking.Sntp/)  |
 | nanoFramework.Networking.Sntp (preview) | [![Build status](https://ci.appveyor.com/api/projects/status/3d2obh2u8r0peaa5/branch/develop?svg=true)](https://ci.appveyor.com/project/nfbot/lib-nanoframework-networking-sntp/branch/develop) | [![MyGet Pre Release](https://img.shields.io/myget/nanoframework-dev/vpre/nanoFramework.Networking.Sntp.svg)](https://www.myget.org/feed/nanoframework-dev/package/nuget/nanoFramework.Networking.Sntp) |
 
 
