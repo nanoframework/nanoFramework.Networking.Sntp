@@ -2,12 +2,22 @@
 
 ## [**Changes available only in 'Preview' NuGet packages:**](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/tree/HEAD)
 
+[Full Changelog](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/compare/v1.0.0...HEAD)
+
+**Documentation and other chores:**
+
+- Bumps nanoFramework.CoreLibrary from 1.0.4 to 1.0.5-preview024 [\#16](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/16)
+- merge back changes from Release 1.0.0 branch [\#14](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/14)
+
+## [v1.0.0](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/tree/v1.0.0) (2018-10-17)
 **Implemented enhancements:**
 
 - Add strong name signing [\#3](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/3)
 
 **Documentation and other chores:**
 
+- Merge 'develop' for Release 1.0.0 [\#13](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/13)
+- Bumps nanoFramework.CoreLibrary from 1.0.1-preview134 to 1.0.4 [\#12](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/12)
 - Bumps nanoFramework.CoreLibrary from 1.0.1-preview127 to 1.0.1-preview134 [\#10](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/10)
 - Bumps nanoFramework.CoreLibrary from 1.0.1-preview123 to 1.0.1-preview127 [\#9](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/9)
 - Bumps nanoFramework.CoreLibrary from 1.0.1-preview118 to 1.0.1-preview123 [\#8](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/8)
