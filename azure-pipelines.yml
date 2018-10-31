@@ -17,6 +17,8 @@ steps:
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
+    feedsToUse: config
+    nugetConfigPath: source/NuGet.config
 
 - task: VSBuild@1
   inputs:
@@ -28,3 +30,13 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+- task: PublishBuildArtifacts@1
+
+- task: NuGetCommand@2
+  inputs:
+    command: push
+    nuGetFeedType: external
+    publishFeedCredentials: 'MyGet'
+    versioningScheme: byEnvVar
+    versionEnvVar: Version
