@@ -16,6 +16,7 @@ skip_commits:
   - 'LICENSE'
   - dir/*
   - '.gitignore'
+  - 'azure-pipelines.yml'
 
 build:
   verbosity: minimal
