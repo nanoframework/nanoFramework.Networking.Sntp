@@ -20,6 +20,31 @@ steps:
     feedsToUse: config
     nugetConfigPath: source/NuGet.config
 
+# Download file 
+# - task: DownloadFile@1
+#   inputs:
+#     FileUrl: 'https://marketplace.visualstudio.com/_apis/public/gallery/publishers/vs-publisher-1470366/vsextensions/nanoFrameworkVS2017Extension/0/vspackage'
+
+# # install nanoFramework VS extension
+# - task: PowerShell@2
+#   inputs:
+#     targetType: 'inline'
+#     script: 'Install-Module VSSetup -Scope CurrentUser -AcceptLicense -Force'
+#     errorActionPreference: 'stop'
+
+# install nanoFramework VS extension
+- task: PowerShell@2
+  inputs:
+    filePath: 'install-nf-vs-extension.ps1'
+    errorActionPreference: 'stop'
+
+# # Run a command line script using cmd.exe on Windows and bash on macOS and Linux.
+# - task: CmdLine@2
+#   inputs:
+#     script: '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VSIXInstaller.exe" /q D:\a\_temp\nanoFramework.Tools.VS2017.Extension.vsix'
+#     #workingDirectory: # Optional
+#     #failOnStderr: false # Optional
+
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
