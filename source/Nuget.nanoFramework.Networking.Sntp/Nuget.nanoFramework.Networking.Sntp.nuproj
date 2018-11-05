@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup>
-    <GitVersion_NuGetVersionV2 Condition=" '$(GitVersion_NuGetVersionV2)' == '' ">1.0.0-preview001</GitVersion_NuGetVersionV2>
+    <NBGV_NuGetPackageVersion Condition=" '$(NBGV_NuGetPackageVersion)' == '' ">1.0.0-preview001</NBGV_NuGetPackageVersion>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="..\nanoFramework.Networking.Sntp\bin\$(Configuration)\nanoFramework.Networking.Sntp.dll">
@@ -47,7 +47,7 @@
   <Import Project="$(NuProjPath)\NuProj.props" Condition="Exists('$(NuProjPath)\NuProj.props')" />
   <PropertyGroup Label="Configuration">
     <Id>nanoFramework.Networking.Sntp</Id>
-    <Version>$(GitVersion_NuGetVersionV2)</Version>
+    <Version>$(NBGV_NuGetPackageVersion)</Version>
     <Title>nanoFramework.Networking.Sntp</Title>
     <Authors>nanoFramework project contributors</Authors>
     <Owners>nanoFramework project contributors</Owners>

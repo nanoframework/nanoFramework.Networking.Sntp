@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup>
-    <GitVersion_NuGetVersionV2 Condition=" '$(GitVersion_NuGetVersionV2)' == '' ">1.0.0-preview001</GitVersion_NuGetVersionV2>
+    <NBGV_NuGetPackageVersion Condition=" '$(NBGV_NuGetPackageVersion)' == '' ">1.0.0-preview001</NBGV_NuGetPackageVersion>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="content\" />
@@ -50,7 +50,7 @@
   <Import Project="$(NuProjPath)\NuProj.props" Condition="Exists('$(NuProjPath)\NuProj.props')" />
   <PropertyGroup Label="Configuration">
     <Id>nanoFramework.Networking.Sntp.DELIVERABLES</Id>
-    <Version>$(GitVersion_NuGetVersionV2)</Version>
+    <Version>$(NBGV_NuGetPackageVersion)</Version>
     <Title>nanoFramework.Networking.Sntp.DELIVERABLES</Title>
     <Authors>nanoFramework project contributors</Authors>
     <Owners>nanoFramework project contributors</Owners>

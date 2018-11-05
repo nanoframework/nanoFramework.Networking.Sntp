@@ -49,8 +49,7 @@ install:
   - bundle config --local path vendor/bundle
   - gem install bundler --quiet --no-ri --no-rdoc
   - gem install github_changelog_generator --quiet --no-ri --no-rdoc
-  # this needs to be replace with the official version and nuget package as soon as it's released
-  - dotnet tool install -g --version 4.0.0-pullrequest1422-1625 --add-source https://ci.appveyor.com/nuget/gitversion-8nigugxjftrw GitVersion.CommandLine.DotNetCore.Tool
+  - dotnet tool install --tool-path . nbgv
   - ps: .\install-vsix-appveyor.ps1
 
 before_build:
@@ -60,12 +59,19 @@ before_build:
 
     nuget restore source\nanoFramework.Networking.Sntp.sln
 
-    dotnet-gitversion /l console /output buildserver /updateAssemblyInfo "source\nanoFramework.Networking.Sntp\Properties\AssemblyInfo.cs"
+    .\nbgv cloud -p "source"
 
 build_script:
 - ps: >-
 
-    msbuild source\nanoFramework.Networking.Sntp.sln /p:Configuration=Release /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+    if ($env:APPVEYOR_REPO_TAG -eq "true")
+    {
+      msbuild source\nanoFramework.Networking.Sntp.sln /p:PublicRelease=true /p:Configuration=Release /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+    }
+    else
+    {
+      msbuild source\nanoFramework.Networking.Sntp.sln /p:Configuration=Release /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+    }
 
 before_deploy:
   - ps:  >-
@@ -73,12 +79,12 @@ before_deploy:
       
       .\generate-change-log.ps1
       
-      Push-AppveyorArtifact $env:APPVEYOR_BUILD_FOLDER\source\Nuget.nanoFramework.Networking.Sntp\bin\Release\nanoFramework.Networking.Sntp.$env:GitVersion_NuGetVersionV2.nupkg
+      Push-AppveyorArtifact $env:APPVEYOR_BUILD_FOLDER\source\Nuget.nanoFramework.Networking.Sntp\bin\Release\nanoFramework.Networking.Sntp.$env:NBGV_NuGetPackageVersion.nupkg
 
 after_deploy:
 # for this environment variable to work here it has to be set in AppVeyor UI
-- nuget push source\Nuget.nanoFramework.Networking.Sntp\bin\Release\nanoFramework.Networking.Sntp.%GitVersion_NuGetVersionV2%.nupkg %MyGetToken% -Source https://www.myget.org/F/nanoframework-dev/api/v2/package
-- nuget push source\Nuget.nanoFramework.Networking.Sntp.DELIVERABLES\bin\Release\nanoFramework.Networking.Sntp.DELIVERABLES.%GitVersion_NuGetVersionV2%.nupkg %MyGetToken% -Source https://www.myget.org/F/nanoframework-dev/api/v2/package
+- nuget push source\Nuget.nanoFramework.Networking.Sntp\bin\Release\nanoFramework.Networking.Sntp.%NBGV_NuGetPackageVersion%.nupkg %MyGetToken% -Source https://www.myget.org/F/nanoframework-dev/api/v2/package
+- nuget push source\Nuget.nanoFramework.Networking.Sntp.DELIVERABLES\bin\Release\nanoFramework.Networking.Sntp.DELIVERABLES.%NBGV_NuGetPackageVersion%.nupkg %MyGetToken% -Source https://www.myget.org/F/nanoframework-dev/api/v2/package
 
 # requires APPVEYOR_DISCORD_WEBHOOK_URL enviroment variable set with Discord webhook URL
 on_failure:
@@ -108,9 +114,9 @@ for:
     on:
       appveyor_repo_tag: true
   - provider: GitHub
-    tag: v$(GitVersion_NuGetVersionV2)
-    release: nanoFramework.Networking.Sntp Library v$(GitVersion_NuGetVersionV2)
-    description: 'Check the [changelog](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/blob/master/CHANGELOG.md)\n\n## Install from NuGet\n\nThe following NuGet packages are available for download from this release\n\n:package: [.NET](https://www.nuget.org/packages/nanoFramework.Networking.Sntp/$(GitVersion_NuGetVersionV2)) v$(GitVersion_NuGetVersionV2)'
+    tag: v$(NBGV_NuGetPackageVersion)
+    release: nanoFramework.Networking.Sntp Library v$(NBGV_NuGetPackageVersion)
+    description: 'Check the [changelog](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/blob/master/CHANGELOG.md)\n\n## Install from NuGet\n\nThe following NuGet packages are available for download from this release\n\n:package: [.NET](https://www.nuget.org/packages/nanoFramework.Networking.Sntp/$(NBGV_NuGetPackageVersion)) v$(NBGV_NuGetPackageVersion)'
     auth_token:
       secure: DNixoFFE+pGlwyhj7McfZoln42vOmj0iY1iNV9zXEr3y0NpXlOIgL8k5ehzlFM1S
     artifact:
@@ -126,9 +132,9 @@ for:
 
   deploy:
   - provider: GitHub
-    tag: v$(GitVersion_NuGetVersionV2)
-    release: nanoFramework.Networking.Sntp Library v$(GitVersion_NuGetVersionV2)
-    description: 'Check the [changelog](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/blob/$(appveyor_repo_branch)/CHANGELOG.md)\n\n## Install from nanoFramework MyGet development feed\n\nThe following NuGet packages are available for download from this release\n\npackage: [.NET](https://www.myget.org/feed/nanoframework-dev/package/nuget/nanoFramework.Networking.Sntp/$(GitVersion_NuGetVersionV2)) v$(GitVersion_NuGetVersionV2)'
+    tag: v$(NBGV_NuGetPackageVersion)
+    release: nanoFramework.Networking.Sntp Library v$(NBGV_NuGetPackageVersion)
+    description: 'Check the [changelog](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/blob/$(appveyor_repo_branch)/CHANGELOG.md)\n\n## Install from nanoFramework MyGet development feed\n\nThe following NuGet packages are available for download from this release\n\npackage: [.NET](https://www.myget.org/feed/nanoframework-dev/package/nuget/nanoFramework.Networking.Sntp/$(NBGV_NuGetPackageVersion)) v$(NBGV_NuGetPackageVersion)'
     auth_token:
       secure: DNixoFFE+pGlwyhj7McfZoln42vOmj0iY1iNV9zXEr3y0NpXlOIgL8k5ehzlFM1S
     artifact:
@@ -150,9 +156,9 @@ for:
     on:
       appveyor_repo_tag: true
   - provider: GitHub
-    tag: v$(GitVersion_NuGetVersionV2)
-    release: nanoFramework.Networking.Sntp Library v$(GitVersion_NuGetVersionV2)
-    description: 'Check the [changelog](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/blob/$(appveyor_repo_branch)/CHANGELOG.md)\n\n## Install from NuGet\n\nThe following NuGet packages are available for download from this release\n\n:package: [.NET](https://www.nuget.org/packages/nanoFramework.Networking.Sntp/$(GitVersion_NuGetVersionV2)) v$(GitVersion_NuGetVersionV2)'
+    tag: v$(NBGV_NuGetPackageVersion)
+    release: nanoFramework.Networking.Sntp Library v$(NBGV_NuGetPackageVersion)
+    description: 'Check the [changelog](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/blob/$(appveyor_repo_branch)/CHANGELOG.md)\n\n## Install from NuGet\n\nThe following NuGet packages are available for download from this release\n\n:package: [.NET](https://www.nuget.org/packages/nanoFramework.Networking.Sntp/$(NBGV_NuGetPackageVersion)) v$(NBGV_NuGetPackageVersion)'
     auth_token:
       secure: DNixoFFE+pGlwyhj7McfZoln42vOmj0iY1iNV9zXEr3y0NpXlOIgL8k5ehzlFM1S
     artifact:
