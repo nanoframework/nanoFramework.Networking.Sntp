@@ -11,13 +11,13 @@ if ($env:APPVEYOR_REPO_TAG -eq "true")
     cd nf-interpreter > $null
 
     # new branch name
-    $newBranch = "$env:APPVEYOR_REPO_BRANCH-nfbot/update-version/nanoFramework.Networking.Sntp/$env:NBGV_NuGetPackageVersion"
+    $newBranch = "$env:APPVEYOR_REPO_BRANCH-nfbot/update-version/nanoFramework.Networking.Sntp/$env:MyNuGetVersion"
 
     # create branch to perform updates
     git checkout -b "$newBranch" develop -q
     
     # replace version in assembly declaration
-    $newVersion = $env:NBGV_GitBuildVersion -replace "\." , ", "
+    $newVersion = $env:NBGV_Version -replace "\." , ", "
     $newVersion = "{ $newVersion }"
     
     $versionRegex = "\{\s*\d+\,\s*\d+\,\s*\d+\,\s*\d+\s*}"
@@ -40,7 +40,7 @@ if ($env:APPVEYOR_REPO_TAG -eq "true")
     }
     else
     {
-        $commitMessage = "Update nanoFramework.Networking.Sntp version to $env:NBGV_NuGetPackageVersion"
+        $commitMessage = "Update nanoFramework.Networking.Sntp version to $env:MyNuGetVersion"
 
         # commit changes
         git add -A 2>&1
