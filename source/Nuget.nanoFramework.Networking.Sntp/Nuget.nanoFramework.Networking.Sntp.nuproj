@@ -10,9 +10,6 @@
       <Platform>AnyCPU</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <PropertyGroup>
-    <GitVersion_NuGetVersionV2 Condition=" '$(GitVersion_NuGetVersionV2)' == '' ">1.0.0-preview001</GitVersion_NuGetVersionV2>
-  </PropertyGroup>
   <ItemGroup>
     <Content Include="..\nanoFramework.Networking.Sntp\bin\$(Configuration)\nanoFramework.Networking.Sntp.dll">
       <Link>lib\nanoFramework.Networking.Sntp.dll</Link>
@@ -41,13 +38,21 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>6CC7C231-8DEA-4227-9577-DD427EC45562</ProjectGuid>
   </PropertyGroup>
+  <Target Name="GetNuPkgVersion" DependsOnTargets="GetBuildVersion">
+    <PropertyGroup>
+      <Version>$(NuGetPackageVersion)</Version>
+    </PropertyGroup>
+  </Target>
   <PropertyGroup>
     <NuProjPath>..\packages\NuProj.0.20.4-beta\tools\</NuProjPath>
   </PropertyGroup>
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\..\packages\Nerdbank.GitVersioning.2.2.13\build\NerdBank.GitVersioning.targets" Condition="Exists('..\..\packages\Nerdbank.GitVersioning.2.2.13\build\NerdBank.GitVersioning.targets')" />
+  </ImportGroup>
   <Import Project="$(NuProjPath)\NuProj.props" Condition="Exists('$(NuProjPath)\NuProj.props')" />
   <PropertyGroup Label="Configuration">
     <Id>nanoFramework.Networking.Sntp</Id>
-    <Version>$(GitVersion_NuGetVersionV2)</Version>
+    <Version>1.0.0</Version>
     <Title>nanoFramework.Networking.Sntp</Title>
     <Authors>nanoFramework project contributors</Authors>
     <Owners>nanoFramework project contributors</Owners>

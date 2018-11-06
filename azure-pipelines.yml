@@ -1,7 +1,12 @@
-# .NET Desktop
-# Build and run tests for .NET Desktop or Windows classic desktop solutions.
-# Add steps that publish symbols, save build artifacts, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
+trigger:
+  branches:
+    include: ["master", "*"]  
+  paths:
+    exclude: ["doc", "*.md", ".appveyor.yml"]
+
+pr:
+  branches:
+    include: [ "*" ]
 
 pool:
   vmImage: 'VS2017-Win2016'
@@ -20,23 +25,27 @@ steps:
     feedsToUse: config
     nugetConfigPath: source/NuGet.config
 
-# Download file 
-# - task: DownloadFile@1
-#   inputs:
-#     FileUrl: 'https://marketplace.visualstudio.com/_apis/public/gallery/publishers/vs-publisher-1470366/vsextensions/nanoFrameworkVS2017Extension/0/vspackage'
+- task: DotNetCoreCLI@2  
+  inputs:
+    command: custom
+    custom: tool
+    arguments: install --tool-path . nbgv
+  displayName: Install NBGV tool
 
-# # install nanoFramework VS extension
-# - task: PowerShell@2
-#   inputs:
-#     targetType: 'inline'
-#     script: 'Install-Module VSSetup -Scope CurrentUser -AcceptLicense -Force'
-#     errorActionPreference: 'stop'
+- script: nbgv cloud -p "source"
+  displayName: Set build number
+  condition: ne(variables['system.pullrequest.isfork'], true)
 
 # install nanoFramework VS extension
 - task: PowerShell@2
   inputs:
     filePath: 'install-nf-vs-extension.ps1'
     errorActionPreference: 'stop'
+
+# # Batch Script
+# - task: BatchScript@1
+#   inputs:
+#     filename: '$(INSTALLER_PATH)'
 
 # # Run a command line script using cmd.exe on Windows and bash on macOS and Linux.
 # - task: CmdLine@2
@@ -51,17 +60,30 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: VSTest@2
+# we don't have tests (yet)
+# - task: VSTest@2
+#   inputs:
+#     platform: '$(buildPlatform)'
+#     configuration: '$(buildConfiguration)'
+
+- task: CopyFiles@1
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    sourceFolder: $(System.DefaultWorkingDirectory)
+    Contents: |
+      **source\Nuget.*\*.nupkg
+    TargetFolder: $(Build.ArtifactStagingDirectory)/deployables
+    flattenFolders: true
+  displayName: Collecting deployable artifacts
 
 - task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: $(Build.ArtifactStagingDirectory)/deployables
+    ArtifactName: deployables
+    ArtifactType: Container
+  displayName: Publish deployables artifacts
 
 - task: NuGetCommand@2
   inputs:
     command: push
     nuGetFeedType: external
     publishFeedCredentials: 'MyGet'
-    versioningScheme: byEnvVar
-    versionEnvVar: Version

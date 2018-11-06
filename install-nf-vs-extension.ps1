@@ -17,8 +17,11 @@
 # | Select-VSSetupInstance `
 # | Select-Object -ExpandProperty InstallationPath
 
-# # extension path
-# $vsixPath = Join-Path $env:Agent_TempDirectory "nanoFramework.Tools.VS2017.Extension.vsix"
+# extension path
+$vsixPath = Join-Path $env:Agent_TempDirectory "nanoFramework.Tools.VS2017.Extension.vsix"
+# installer path
+$INSTALLER_PATH = Join-Path $env:Agent_TempDirectory "install-vsix.cmd"
+Write-Host ("##vso[task.setvariable variable=INSTALLER_PATH;]$INSTALLER_PATH")
 
 # "Downloading extension from marketplace..." | Write-Host -ForegroundColor White
 
@@ -40,33 +43,23 @@ $FilePath = "${env:Temp}\$Name"
 
 Invoke-WebRequest -Uri $Url -OutFile $FilePath
 
-$ArgumentList = ('/quiet', $FilePath)
+# $ArgumentList = ('/quiet /a', $FilePath)
 
+# install on normal process 
 Write-Host "Starting Install $Name..."
-$process = Start-Process -FilePath 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VSIXInstaller.exe' -ArgumentList $ArgumentList -Wait -PassThru -NoNewWindow
-$exitCode = $process.ExitCode
+Start-Process -FilePath 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VSIXInstaller.exe' -ArgumentList " /skuName:Enterprise /skuVersion:15.0 /quiet /a $FilePath" -Wait -PassThru
 
-if ($exitCode -eq 0 -or $exitCode -eq 3010)
-{
-    Write-Host -Object 'Installation successful'
-    return $exitCode
-}
-else
-{
-    Write-Host -Object "Non zero exit code returned by the installation process : $exitCode."
-    return $exitCode
-}
-
-# install on process with timeout
+# # install on process with timeout
 # Write-Host "Starting Install $Name..."
 
-# $proc = Start-Process -FilePath 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VSIXInstaller.exe' -ArgumentList $ArgumentList -Wait -PassThru
+# $proc = Start-Process -FilePath 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VSIXInstaller.exe' -ArgumentList "/q /a $FilePath" -Wait -PassThru
 
 # # keep track of timeout event
 # $timeouted = $null # reset any previously set timeout
 
 # # wait up to 4 minutes (4 * 60 = 240 seconds) for normal termination
-# $proc | Wait-Process -Timeout 240 -ErrorAction SilentlyContinue -ErrorVariable timeouted
+# Wait-Process -Name "VSIXInstaller" -Timeout 240 -ErrorAction SilentlyContinue -ErrorVariable $timeouted
+# # $proc | Wait-Process -Timeout 240 -ErrorAction SilentlyContinue -ErrorVariable timeouted
 
 # if ($timeouted)
 # {
@@ -85,6 +78,9 @@ else
 # ("`"$vsInstallPath\Common7\IDE\VSIXInstaller.exe`" /q $vsixPath" | Out-File $installScript -Encoding ASCII)
 
 # # "`"$vsInstallPath\Common7\IDE\VSIXInstaller.exe`" /q /a $vsixPath" | out-file ".\install-vsix.cmd" -Encoding ASCII
+# "`"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VSIXInstaller.exe`" /skuName:Enterprise /skuVersion:15.0 /q /a `"$vsixPath`"" | out-file $INSTALLER_PATH -Encoding ASCII
+"`"$vsInstallPath\Common7\IDE\VSIXInstaller.exe`" /skuName:Enterprise /skuVersion:15.0 /q `"$vsixPath`"" | out-file $INSTALLER_PATH -Encoding ASCII
+
 # Start-Process -FilePath "$vsInstallPath\Common7\IDE\VSIXInstaller.exe" -ArgumentList "/q $extension" -Wait -PassThru
 
 # 'Installing nanoFramework VS extension ...' | Write-Host -ForegroundColor White -NoNewline
