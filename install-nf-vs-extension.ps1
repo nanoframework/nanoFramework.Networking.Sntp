@@ -5,7 +5,7 @@
 # choco install wixtoolset -y --force
 
 # #Installing VS extension 'Wix Toolset Visual Studio 2017 Extension'
-# Install-VsixExtension -Url 'https://marketplace.visualstudio.com/_apis/public/gallery/publishers/vs-publisher-1470366/vsextensions/nanoFrameworkVS2017Extension/0/vspackage' -Name 'nanoFramework.Tools.VS2017.Extension.vsix'
+# Install-VsixExtension -Url 'https://marketplace.visualstudio.com/_apis/public/gallery/publishers/vs-publisher-1470366/vsextensions/nanoFrameworkVS2017Extension/0/vspackage' -Name '47973986-ed3c-4b64-ba40-a9da73b44ef7-1.0.1.0.vsix'
 
 
 # # install VSSetup PS module (https://github.com/Microsoft/vssetup.powershell)
@@ -18,7 +18,7 @@
 # | Select-Object -ExpandProperty InstallationPath
 
 # extension path
-$vsixPath = Join-Path $env:Agent_TempDirectory "nanoFramework.Tools.VS2017.Extension.vsix"
+$vsixPath = Join-Path $env:Agent_TempDirectory "47973986-ed3c-4b64-ba40-a9da73b44ef7-1.0.1.0.vsix"
 # installer path
 $INSTALLER_PATH = Join-Path $env:Agent_TempDirectory "install-vsix.cmd"
 Write-Host ("##vso[task.setvariable variable=INSTALLER_PATH;]$INSTALLER_PATH")
@@ -35,19 +35,22 @@ Write-Host ("##vso[task.setvariable variable=INSTALLER_PATH;]$INSTALLER_PATH")
 
 # # $installScript = Join-Path $env:Agent_TempDirectory "install-vsix.cmd"
 
-$Url = "https://vs-publisher-1470366.gallerycdn.vsassets.io/extensions/vs-publisher-1470366/nanoframeworkvs2017extension/1.0.0.0/1539707795657/nanoFramework.Tools.VS2017.Extension.vsix"
-$Name = "nanoFramework.Tools.VS2017.Extension.vsix"
+# $Url = "https://www.myget.org/F/nanoframework-dev/vsix/47973986-ed3c-4b64-ba40-a9da73b44ef7-1.0.1.0.vsix"
+# $Name = "47973986-ed3c-4b64-ba40-a9da73b44ef7-1.0.1.0.vsix"
 
-Write-Host "Downloading $Name..."
-$FilePath = "${env:Temp}\$Name"
+# Write-Host "Downloading $Name..."
+# $FilePath = "${env:Temp}\$Name"
 
-Invoke-WebRequest -Uri $Url -OutFile $FilePath
+# # Invoke-WebRequest -Uri $Url -OutFile $FilePath
+
+(New-Object Net.WebClient).DownloadFile('https://www.myget.org/F/nanoframework-dev/vsix/47973986-ed3c-4b64-ba40-a9da73b44ef7-1.0.1.0.vsix', $vsixPath)
+
 
 # $ArgumentList = ('/quiet /a', $FilePath)
 
 # install on normal process 
-Write-Host "Starting Install $Name..."
-Start-Process -FilePath 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VSIXInstaller.exe' -ArgumentList " /skuName:Enterprise /skuVersion:15.0 /quiet /a $FilePath" -Wait -PassThru
+Write-Host "Starting Install VS nanoFramework extension..."
+Start-Process -FilePath 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VSIXInstaller.exe' -ArgumentList " /skuName:Enterprise /skuVersion:15.0 /quiet /a $vsixPath" -Wait -PassThru
 
 # # install on process with timeout
 # Write-Host "Starting Install $Name..."
@@ -79,7 +82,7 @@ Start-Process -FilePath 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Ent
 
 # # "`"$vsInstallPath\Common7\IDE\VSIXInstaller.exe`" /q /a $vsixPath" | out-file ".\install-vsix.cmd" -Encoding ASCII
 # "`"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VSIXInstaller.exe`" /skuName:Enterprise /skuVersion:15.0 /q /a `"$vsixPath`"" | out-file $INSTALLER_PATH -Encoding ASCII
-"`"$vsInstallPath\Common7\IDE\VSIXInstaller.exe`" /skuName:Enterprise /skuVersion:15.0 /q `"$vsixPath`"" | out-file $INSTALLER_PATH -Encoding ASCII
+# "`"$vsInstallPath\Common7\IDE\VSIXInstaller.exe`" /skuName:Enterprise /skuVersion:15.0 /q `"$vsixPath`"" | out-file $INSTALLER_PATH -Encoding ASCII
 
 # Start-Process -FilePath "$vsInstallPath\Common7\IDE\VSIXInstaller.exe" -ArgumentList "/q $extension" -Wait -PassThru
 
