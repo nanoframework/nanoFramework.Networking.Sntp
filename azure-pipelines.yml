@@ -60,8 +60,14 @@ jobs:
   - task: NuGetCommand@2
     inputs:
       command: 'custom' 
-      arguments: 'pack source\$(nugetPackageName).nuspec -Version 1.0.2-preview-020'
+      arguments: 'pack source\$(nugetPackageName).nuspec -Version $(NBGV_Version)'
       displayName: Pack NuGet with class library
+
+  # - task: NuGetCommand@2
+  #   inputs:
+  #     command: 'custom' 
+  #     arguments: 'pack source\$(nugetPackageName).DELIVERABLES.nuspec -Version $(NBGV_Version)'
+  #     displayName: Pack NuGet with build deliverables class library
 
   - task: CopyFiles@1
     inputs:
@@ -86,17 +92,17 @@ jobs:
     inputs:
       command: push
       nuGetFeedType: external
-      packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+      packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg;!$(Build.ArtifactStagingDirectory)/*.symbols.nupkg'
       publishFeedCredentials: 'MyGet'
     condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest') )
     displayName: Push NuGet packages to MyGet
 
-  # push NuGet packages to NuGet (happens on tag builds for any branch)
+  # push NuGet class lib package to NuGet (happens on tag builds for any branch)
   - task: NuGetCommand@2
     inputs:
       command: push
       nuGetFeedType: external
-      packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+      packagesToPush: '$(Build.ArtifactStagingDirectory)/$(nugetPackageName).nupkg;!$(Build.ArtifactStagingDirectory)/$(nugetPackageName).symbols.nupkg'
       publishFeedCredentials: 'NuGet'
     condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest'), contains(variables['Build.SourceBranchName'], 'tags') )
     displayName: Push NuGet packages to NuGet
