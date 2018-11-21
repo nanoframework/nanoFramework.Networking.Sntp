@@ -1,10 +1,3 @@
-trigger:
-  paths:
-    exclude: 
-    - "doc"
-    - "*.md"
-    - ".appveyor.yml"
-
 # add nf-tools repo to resources (for Azure Pipelines templates)
 resources:
   repositories:
