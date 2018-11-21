@@ -47,8 +47,13 @@ install:
   - bundle config --local path vendor/bundle
   - gem install bundler --quiet --no-ri --no-rdoc
   - gem install github_changelog_generator --quiet --no-ri --no-rdoc
-  - dotnet tool install --tool-path . nbgv
-  - ps: .\install-vsix-appveyor.ps1
+  - ps: |
+      .\install-7zip.ps1
+      if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode)  }
+
+  - ps: |
+      .\install-nf-build-components.ps1
+      if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode)  }
 
 before_build:
 - ps: >-
@@ -57,15 +62,12 @@ before_build:
 
     nuget restore source\nanoFramework.Networking.Sntp.sln
 
-    .\nbgv cloud -p source -a -c
-
 build_script:
 - ps: msbuild source\nanoFramework.Networking.Sntp.sln /p:PublicRelease=true /p:Configuration=Release /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+- ps: Update-AppveyorBuild -Version "$($env:NBGV_SemVer1)" 
 
 before_deploy:
   - ps:  >-
-      .\nbgv cloud --version=$env:NBGV_SemVer1
-
       $env:MyNuGetVersion = $env:NBGV_NuGetPackageVersion -replace "\-g$env:NBGV_GitCommitIdShort", " "
     
       .\generate-change-log.ps1
@@ -74,8 +76,6 @@ before_deploy:
   - nuget pack source\nanoFramework.Networking.Sntp.DELIVERABLES.nuspec -Version %MyNuGetVersion%
   - ps:  >-
       .\commit-assemblyinfo-changes.ps1
-      
-      .\generate-change-log.ps1
       
       Push-AppveyorArtifact $env:APPVEYOR_BUILD_FOLDER\nanoFramework.Networking.Sntp.$env:MyNuGetVersion.nupkg
 
