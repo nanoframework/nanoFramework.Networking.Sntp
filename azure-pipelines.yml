@@ -12,140 +12,171 @@ resources:
       type: github
       name: nanoframework/nf-tools
       endpoint: nfbot
+pool:
+  vmImage: 'VS2017-Win2016'
 
-jobs:
+variables:
+  solution: '**/source/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  nugetPackageName: 'nanoFramework.Networking.Sntp'
 
-#######################
-- job: Build_Class_Lib
-  pool:
-    vmImage: 'VS2017-Win2016'
+steps:
 
-  variables:
-    solution: '**/source/*.sln'
-    buildPlatform: 'Any CPU'
-    buildConfiguration: 'Release'
-    nugetPackageName: 'nanoFramework.Networking.Sntp'
+# need this here in order to persist GitHub credentials 
+- checkout: self
+  persistCredentials: true
 
-  steps:
+- script: |
+    git config --global user.email "nfbot@users.noreply.github.com"
+    git config --global user.name "nfbot"
+  displayName: Setup git identity
 
-  # need this here in order to persist GitHub credentials 
-  - checkout: self
-    persistCredentials: true
+- task: NuGetToolInstaller@0
 
-  - task: NuGetToolInstaller@0
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+    feedsToUse: config
+    nugetConfigPath: source/NuGet.config
 
-  - task: NuGetCommand@2
-    inputs:
-      restoreSolution: '$(solution)'
-      feedsToUse: config
-      nugetConfigPath: source/NuGet.config
+- task: InstallnFBuildComponents@1
+  displayName: Install nanoFramework MSBuild components
 
-  - template: azure-pipelines-templates/nb-gitversioning-class-lib.yml@templates 
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
 
-  - task: InstallnFBuildComponents@1
-    displayName: Install nanoFramework MSBuild components
+# we don't have tests (yet)
+# - task: VSTest@2
+#   inputs:
+#     platform: '$(buildPlatform)'
+#     configuration: '$(buildConfiguration)'
 
-  - task: VSBuild@1
-    inputs:
-      solution: '$(solution)'
-      platform: '$(buildPlatform)'
-      configuration: '$(buildConfiguration)'
+- task: PowerShell@2
+  inputs:
+      targetType: 'inline'
+      script: |
+          $MyNuGetVersion = $env:NBGV_NuGetPackageVersion -replace "\-g$env:NBGV_GitCommitIdShort", " "
 
-  # we don't have tests (yet)
-  # - task: VSTest@2
-  #   inputs:
-  #     platform: '$(buildPlatform)'
-  #     configuration: '$(buildConfiguration)'
+          # replace preview with alpha if this is a PR build
+          if($env:Build_Reason -eq 'PullRequest')
+          {
+            $MyNuGetVersion = $MyNuGetVersion -replace "preview", "alpha"
+          }
 
-  - task: NuGetCommand@2
-    inputs:
-      command: 'custom' 
-      arguments: 'pack source\$(nugetPackageName).nuspec -Version $(NBGV_Version)'
-      displayName: Pack NuGet with class library
+          Write-Host "NuGet build number is $MyNuGetVersion"
 
-  # - task: NuGetCommand@2
-  #   inputs:
-  #     command: 'custom' 
-  #     arguments: 'pack source\$(nugetPackageName).DELIVERABLES.nuspec -Version $(NBGV_Version)'
-  #     displayName: Pack NuGet with build deliverables class library
+          Write-Host "$("##vso[task.setvariable variable=MY_NUGET_VERSION]")$MyNuGetVersion"
+  condition: succeeded()
+  displayName: Get NuGet build number
 
-  - task: CopyFiles@1
-    inputs:
-      sourceFolder: $(Build.SourcesDirectory)
-      Contents: |
-        **\$(nugetPackageName)*.nupkg
-      TargetFolder: '$(Build.ArtifactStagingDirectory)'
-      flattenFolders: true
-    condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest') )
-    displayName: Collecting deployable artifacts
+- task: UseRubyVersion@0
+  inputs:
+    versionSpec: '>= 2.4' 
+    addToPath: true
+  condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest') )
+  displayName: Setup Ruby
 
-  - task: PublishBuildArtifacts@1
-    inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-      ArtifactName: deployables
-      ArtifactType: Container
-    condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest') )
-    displayName: Publish deployables artifacts
+# generate change log including future version
+- powershell: |
+      gem install github_changelog_generator --quiet --no-ri --no-rdoc
+      # need to call it passing both cache options with full path otherwise it won't work
+      github_changelog_generator --token $(GitHubToken) --cache-log  $env:AGENT_TEMPDIRECTORY\github-changelog-logger.log --cache-file $env:AGENT_TEMPDIRECTORY\github-changelog-http-cache
+  condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest'), or( eq(variables['Build.SourceBranchName'], 'master'), contains(variables['Build.SourceBranchName'], 'release') ) )
+  displayName: Generate change log
 
-  # push NuGet packages to MyGet feed (always happens except on PR builds)
-  - task: NuGetCommand@2
-    inputs:
-      command: push
-      nuGetFeedType: external
-      packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg;!$(Build.ArtifactStagingDirectory)/*.symbols.nupkg'
-      publishFeedCredentials: 'MyGet'
-    condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest') )
-    displayName: Push NuGet packages to MyGet
+# generate change log including future version
+- powershell: |
+      gem install github_changelog_generator --quiet --no-ri --no-rdoc
+      # need to call it passing both cache options with full path otherwise it won't work
+      github_changelog_generator --token $(GitHubToken) --cache-log  $env:AGENT_TEMPDIRECTORY\github-changelog-logger.log --cache-file $env:AGENT_TEMPDIRECTORY\github-changelog-http-cache --future-release v$env:MY_NUGET_VERSION
+  condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest'), not( or( eq(variables['Build.SourceBranchName'], 'master'), contains(variables['Build.SourceBranchName'], 'release') ) ) )
+  displayName: Generate change log
 
-  # push NuGet class lib package to NuGet (happens on tag builds for any branch)
-  - task: NuGetCommand@2
-    inputs:
-      command: push
-      nuGetFeedType: external
-      packagesToPush: '$(Build.ArtifactStagingDirectory)/$(nugetPackageName).nupkg;!$(Build.ArtifactStagingDirectory)/$(nugetPackageName).symbols.nupkg'
-      publishFeedCredentials: 'NuGet'
-    condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest'), contains(variables['Build.SourceBranchName'], 'tags') )
-    displayName: Push NuGet packages to NuGet
+# copy change log to artifacts directory
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(System.DefaultWorkingDirectory)'
+    Contents: 'CHANGELOG.md'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+  condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest') )
+  displayName: Copy Changelog
 
-  - task: UseRubyVersion@0
-    inputs:
-      versionSpec: '>= 2.4' 
-      addToPath: true
-    condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest') )
-    displayName: Setup Ruby
+# push new changelog to GitHub repo
+- powershell: |
+      git add CHANGELOG.md
+      git commit -m "Update CHANGELOG for v$env:NBGV_Version"
+      # need to wrap the git command bellow so it doesn't throw an error because of redirecting the output to stderr
+      git push origin "HEAD:$env:Build_SourceBranchName" --porcelain
+  condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest'), not( contains(variables['Build.SourceBranchName'], 'tags') ) )
+  displayName: Push changelog to GitHub
 
-  # generate change log including future version
-  - script: |
-        gem install github_changelog_generator
-        bundle exec github_changelog_generator --token $(GitHubToken) --future-release "v$(NBGV_Version)"
-    condition: and( succeeded(), or( eq(variables['Build.SourceBranchName'], 'master'), contains(variables['Build.SourceBranchName'], 'release') ) )
-    displayName: Generate change log
+# update could build number (only possible if this is not a PR from a fork)
+- task: PowerShell@2
+  inputs:
+      targetType: 'inline'
+      script: Write-Host "$("##vso[build.updatebuildnumber]")$env:NBGV_NuGetPackageVersion"
+  condition: and( succeeded(), ne(variables['system.pullrequest.isfork'], true) )
+  displayName: Update cloud build number
 
-  # generate change log including future version
-  - script: |
-        gem install github_changelog_generator
-        bundle exec github_changelog_generator --token $(GitHubToken)
-    condition: and( succeeded(), not( or( eq(variables['Build.SourceBranchName'], 'master'), contains(variables['Build.SourceBranchName'], 'release') ) ) )
-    displayName: Generate change log
+- task: NuGetCommand@2
+  inputs:
+    command: 'custom' 
+    arguments: 'pack source\$(nugetPackageName).nuspec -Version $(MY_NUGET_VERSION) -Symbols'
+  condition: succeeded()
+  displayName: Pack NuGet with class library
 
-##################################
-# report build failure to Discord
-- job: Report_Build_Failure
-  dependsOn:
-  - Build_Class_Lib
-  condition: failed('Build_Class_Lib')
+# - task: NuGetCommand@2
+#   inputs:
+#     command: 'custom' 
+#     arguments: 'pack source\$(nugetPackageName).DELIVERABLES.nuspec -Version $(MY_NUGET_VERSION) -Symbols'
+#     displayName: Pack NuGet with build deliverables class library
 
-  pool:
-    vmImage: 'VS2017-Win2016'
+- task: CopyFiles@1
+  inputs:
+    sourceFolder: $(Build.SourcesDirectory)
+    Contents: |
+      **\$(nugetPackageName)*.nupkg
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    flattenFolders: true
+  condition: succeeded()
+  displayName: Collecting deployable artifacts
 
-  steps:
+# publish artifacts (only possible if this is not a PR originated on a fork)
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: deployables
+    ArtifactType: Container
+  condition: and( succeeded(), ne(variables['system.pullrequest.isfork'], true) )
+  displayName: Publish deployables artifacts
 
-  - checkout: self
-    fetchDepth: 1
+# push NuGet packages to MyGet feed (always happens except on PR builds)
+- task: NuGetCommand@2
+  inputs:
+    command: push
+    nuGetFeedType: external
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg;!$(Build.ArtifactStagingDirectory)/*.symbols.nupkg'
+    publishFeedCredentials: 'MyGet'
+  condition: succeeded()
+  displayName: Push NuGet packages to MyGet
 
-  # step from template @ nf-tools repo
-  - template: azure-pipelines-templates/discord-webhook.yml@templates  
-    parameters:
-      status: 'failure'
-      webhookUrl: '$(DiscordWebhook)'
-      message: ''
+# push NuGet class lib package to NuGet (happens on tag builds for any branch)
+- task: NuGetCommand@2
+  inputs:
+    command: push
+    nuGetFeedType: external
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/$(nugetPackageName).nupkg;!$(Build.ArtifactStagingDirectory)/$(nugetPackageName).symbols.nupkg'
+    publishFeedCredentials: 'NuGet'
+  condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest'), contains(variables['Build.SourceBranchName'], 'tags') )
+  displayName: Push NuGet packages to NuGet
+
+# step from template @ nf-tools repo
+# update assembly declaration in nf-interpreter
+- template: azure-pipelines-templates/update-assembly-declarations.yml@templates  
+
+# step from template @ nf-tools repo
+- template: azure-pipelines-templates/discord-webhook-task.yml@templates  
