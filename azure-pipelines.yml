@@ -30,6 +30,9 @@ steps:
 - script: |
     git config --global user.email "nfbot@users.noreply.github.com"
     git config --global user.name "nfbot"
+
+    echo "SourceBranchName $(Build.SourceBranchName)"
+    echo "Reason $(Build.Reason)
   displayName: Setup git identity
 
 - task: NuGetToolInstaller@0
@@ -85,7 +88,7 @@ steps:
       gem install github_changelog_generator --quiet --no-ri --no-rdoc
       # need to call it passing both cache options with full path otherwise it won't work
       github_changelog_generator --token $(GitHubToken) --cache-log  $env:AGENT_TEMPDIRECTORY\github-changelog-logger.log --cache-file $env:AGENT_TEMPDIRECTORY\github-changelog-http-cache
-  condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest'), or( eq(variables['Build.SourceBranchName'], 'master'), contains(variables['Build.SourceBranchName'], 'release') ) )
+  condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest'), not( contains(variables['Build.SourceBranchName'], 'tags') ), or( eq(variables['Build.SourceBranchName'], 'master'), contains(variables['Build.SourceBranchName'], 'release') ) )
   displayName: Generate change log
 
 # generate change log including future version
@@ -93,7 +96,7 @@ steps:
       gem install github_changelog_generator --quiet --no-ri --no-rdoc
       # need to call it passing both cache options with full path otherwise it won't work
       github_changelog_generator --token $(GitHubToken) --cache-log  $env:AGENT_TEMPDIRECTORY\github-changelog-logger.log --cache-file $env:AGENT_TEMPDIRECTORY\github-changelog-http-cache --future-release v$env:MY_NUGET_VERSION
-  condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest'), not( or( eq(variables['Build.SourceBranchName'], 'master'), contains(variables['Build.SourceBranchName'], 'release') ) ) )
+  condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest'), not( contains(variables['Build.SourceBranchName'], 'tags') ), not( or( eq(variables['Build.SourceBranchName'], 'master'), contains(variables['Build.SourceBranchName'], 'release') ) ) )
   displayName: Generate change log
 
 # copy change log to artifacts directory
@@ -178,6 +181,12 @@ steps:
 # step from template @ nf-tools repo
 # update assembly declaration in nf-interpreter
 - template: azure-pipelines-templates/update-assembly-declarations.yml@templates  
+  parameters:
+    sourceFile: 'nf_networking_sntp.cpp'
 
 # step from template @ nf-tools repo
 - template: azure-pipelines-templates/discord-webhook-task.yml@templates  
+  parameters:
+    status: 'failure'
+    webhookUrl: '$(DiscordWebhook)'
+    message: ''
