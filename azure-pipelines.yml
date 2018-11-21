@@ -25,6 +25,7 @@ steps:
     git config --global user.name "nfbot"
 
     echo "SourceBranchName $(Build.SourceBranchName)"
+    echo "SourceBranch $(Build.SourceBranch)"
     echo "Reason $(Build.Reason)
   displayName: Setup git identity
 
@@ -73,7 +74,7 @@ steps:
   inputs:
     versionSpec: '>= 2.4' 
     addToPath: true
-  condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest') )
+  condition: and( succeeded(), not( contains(variables['Build.SourceBranch'], 'pull') ) )
   displayName: Setup Ruby
 
 # generate change log including future version
@@ -81,7 +82,7 @@ steps:
       gem install github_changelog_generator --quiet --no-ri --no-rdoc
       # need to call it passing both cache options with full path otherwise it won't work
       github_changelog_generator --token $(GitHubToken) --cache-log  $env:AGENT_TEMPDIRECTORY\github-changelog-logger.log --cache-file $env:AGENT_TEMPDIRECTORY\github-changelog-http-cache
-  condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest'), not( contains(variables['Build.SourceBranchName'], 'tags') ), or( eq(variables['Build.SourceBranchName'], 'master'), contains(variables['Build.SourceBranchName'], 'release') ) )
+  condition: and( succeeded(), not( contains(variables['Build.SourceBranch'], 'pull') ), not( contains(variables['Build.SourceBranch'], 'tags') ), or( eq(variables['Build.SourceBranchName'], 'master'), contains(variables['Build.SourceBranchName'], 'release') ) )
   displayName: Generate change log
 
 # generate change log including future version
@@ -89,7 +90,7 @@ steps:
       gem install github_changelog_generator --quiet --no-ri --no-rdoc
       # need to call it passing both cache options with full path otherwise it won't work
       github_changelog_generator --token $(GitHubToken) --cache-log  $env:AGENT_TEMPDIRECTORY\github-changelog-logger.log --cache-file $env:AGENT_TEMPDIRECTORY\github-changelog-http-cache --future-release v$env:MY_NUGET_VERSION
-  condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest'), not( contains(variables['Build.SourceBranchName'], 'tags') ), not( or( eq(variables['Build.SourceBranchName'], 'master'), contains(variables['Build.SourceBranchName'], 'release') ) ) )
+  condition: and( succeeded(), not( contains(variables['Build.SourceBranch'], 'pull') ), not( contains(variables['Build.SourceBranch'], 'tags') ), not( or( eq(variables['Build.SourceBranchName'], 'master'), contains(variables['Build.SourceBranchName'], 'release') ) ) )
   displayName: Generate change log
 
 # copy change log to artifacts directory
@@ -98,7 +99,7 @@ steps:
     SourceFolder: '$(System.DefaultWorkingDirectory)'
     Contents: 'CHANGELOG.md'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
-  condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest') )
+  condition: and( succeeded(), not( contains(variables['Build.SourceBranch'], 'pull') ) )
   displayName: Copy Changelog
 
 # push new changelog to GitHub repo
@@ -108,7 +109,7 @@ steps:
       # need to wrap the git command bellow so it doesn't throw an error because of redirecting the output to stderr
       git push origin "HEAD:$(Build.SourceBranchName)" --porcelain
   workingDirectory: $(System.DefaultWorkingDirectory)
-  condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest'), not( contains(variables['Build.SourceBranchName'], 'tags') ) )
+  condition: and( succeeded(), not( contains(variables['Build.SourceBranch'], 'pull') ), not( contains(variables['Build.SourceBranch'], 'tags') ) )
   displayName: Push changelog to GitHub
 
 # update could build number (only possible if this is not a PR from a fork)
@@ -168,7 +169,7 @@ steps:
     nuGetFeedType: external
     packagesToPush: '$(Build.ArtifactStagingDirectory)/$(nugetPackageName).nupkg;!$(Build.ArtifactStagingDirectory)/$(nugetPackageName).symbols.nupkg'
     publishFeedCredentials: 'NuGet'
-  condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest'), contains(variables['Build.SourceBranchName'], 'tags') )
+  condition: and( succeeded(), not( contains(variables['Build.SourceBranch'], 'pull') ), contains(variables['Build.SourceBranch'], 'tags') )
   displayName: Push NuGet packages to NuGet
 
 # step from template @ nf-tools repo
