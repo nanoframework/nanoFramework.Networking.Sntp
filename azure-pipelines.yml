@@ -108,14 +108,14 @@ steps:
 - script: |
       gem install github_changelog_generator
       bundle exec github_changelog_generator --token $(GitHubToken) --future-release "v$(NBGV_Version)"
-  condition: and( succeeded(), or( eq(variables['Build.SourceBranchName'], 'master'), contains(variables['Build.SourceBranchName'], 'release') ) )
+  condition: and( in(variables['Agent.JobStatus'], 'Succeeded', 'SucceededWithIssues'), or( eq(variables['Build.SourceBranchName'], 'master'), contains(variables['Build.SourceBranchName'], 'release') ) )
   displayName: Generate change log
 
 # generate change log including future version
 - script: |
       gem install github_changelog_generator
       bundle exec github_changelog_generator --token $(GitHubToken)
-  condition: and( succeeded(), not( or( eq(variables['Build.SourceBranchName'], 'master'), contains(variables['Build.SourceBranchName'], 'release') ) ) )
+  condition: and( in(variables['Agent.JobStatus'], 'Succeeded', 'SucceededWithIssues'), not( or( eq(variables['Build.SourceBranchName'], 'master'), contains(variables['Build.SourceBranchName'], 'release') ) ) )
   displayName: Generate change log
 
 # step from template @ nf-tools repo
@@ -124,5 +124,5 @@ steps:
     status: 'failure'
     webhookUrl: '$(DiscordWebhook)'
     message: ''
-  condition: failed()
+  condition: eq(variables['Agent.JobStatus'], 'Failed')
   displayName: report build failure to Discord
