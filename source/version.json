@@ -11,5 +11,9 @@
   "publicReleaseRefSpec": [
     "^refs/heads/master$",
     "^refs/heads/v\\d+(?:\\.\\d+)?$"
-  ]
+  ],
+  "cloudBuild": {
+    "setVersionVariables": true,
+    "setAllVariables": true
+    }
 }
