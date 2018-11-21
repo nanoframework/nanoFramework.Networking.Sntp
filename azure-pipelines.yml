@@ -1,12 +1,17 @@
 trigger:
-  branches:
-    include: ["master", "*"]  
   paths:
-    exclude: ["doc", "*.md", ".appveyor.yml"]
+    exclude: 
+    - "doc"
+    - "*.md"
+    - ".appveyor.yml"
 
-pr:
-  branches:
-    include: [ "*" ]
+# add nf-tools repo to resources (for Azure Pipelines templates)
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      name: nanoframework/nf-tools
+      endpoint: nfbot
 
 pool:
   vmImage: 'VS2017-Win2016'
@@ -15,8 +20,14 @@ variables:
   solution: '**/source/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  nugetPackageName: 'nanoFramework.Networking.Sntp'
 
 steps:
+
+# need this here in order to persist GitHub credentials 
+- checkout: self
+  persistCredentials: true
+
 - task: NuGetToolInstaller@0
 
 - task: NuGetCommand@2
@@ -25,34 +36,10 @@ steps:
     feedsToUse: config
     nugetConfigPath: source/NuGet.config
 
-- task: DotNetCoreCLI@2  
-  inputs:
-    command: custom
-    custom: tool
-    arguments: install --tool-path . nbgv
-  displayName: Install NBGV tool
+- template: azure-pipelines-templates/nb-gitversioning.yml@templates 
 
-- script: nbgv cloud -p "source"
-  displayName: Set build number
-  condition: ne(variables['system.pullrequest.isfork'], true)
-
-# install nanoFramework VS extension
-- task: PowerShell@2
-  inputs:
-    filePath: 'install-nf-vs-extension.ps1'
-    errorActionPreference: 'stop'
-
-# # Batch Script
-# - task: BatchScript@1
-#   inputs:
-#     filename: '$(INSTALLER_PATH)'
-
-# # Run a command line script using cmd.exe on Windows and bash on macOS and Linux.
-# - task: CmdLine@2
-#   inputs:
-#     script: '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VSIXInstaller.exe" /q D:\a\_temp\nanoFramework.Tools.VS2017.Extension.vsix'
-#     #workingDirectory: # Optional
-#     #failOnStderr: false # Optional
+- task: InstallnFBuildComponents@1
+  displayName: Install nanoFramework MSBuild components
 
 - task: VSBuild@1
   inputs:
@@ -66,24 +53,46 @@ steps:
 #     platform: '$(buildPlatform)'
 #     configuration: '$(buildConfiguration)'
 
+- task: NuGetCommand@2
+  inputs:
+    command: 'custom' 
+    arguments: 'pack source\$(nugetPackageName).nuspec -Version 1.0.2-preview-020'
+    displayName: Pack NuGet with class library
+
 - task: CopyFiles@1
   inputs:
-    sourceFolder: $(System.DefaultWorkingDirectory)
+    sourceFolder: $(Build.SourcesDirectory)
     Contents: |
-      **source\Nuget.*\*.nupkg
-    TargetFolder: $(Build.ArtifactStagingDirectory)/deployables
+      **\$(nugetPackageName)*.nupkg
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
     flattenFolders: true
+  condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest') )
   displayName: Collecting deployable artifacts
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: $(Build.ArtifactStagingDirectory)/deployables
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: deployables
     ArtifactType: Container
+  condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest') )
   displayName: Publish deployables artifacts
 
+# push NuGet packages to MyGet feed (always happens except on PR builds)
 - task: NuGetCommand@2
   inputs:
     command: push
     nuGetFeedType: external
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
     publishFeedCredentials: 'MyGet'
+  condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest') )
+  displayName: Push NuGet packages to MyGet
+
+# push NuGet packages to NuGet (happens on tag builds for any branch)
+- task: NuGetCommand@2
+  inputs:
+    command: push
+    nuGetFeedType: external
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    publishFeedCredentials: 'NuGet'
+  condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest'), contains(variables['Build.SourceBranchName'], 'tags') )
+  displayName: Push NuGet packages to NuGet
