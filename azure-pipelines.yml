@@ -106,11 +106,12 @@ steps:
   displayName: Copy Changelog
 
 # push new changelog to GitHub repo
-- powershell: |
+- script: |
       git add CHANGELOG.md
-      git commit -m "Update CHANGELOG for v$env:NBGV_Version"
+      git commit -m "Update CHANGELOG for v$(NBGV_Version)"
       # need to wrap the git command bellow so it doesn't throw an error because of redirecting the output to stderr
-      git push origin "HEAD:$env:Build_SourceBranchName" --porcelain
+      git push origin "HEAD:$(Build.SourceBranchName)" --porcelain
+  workingDirectory: $(System.DefaultWorkingDirectory)
   condition: and( succeeded(), ne(variables['Build.Reason'], 'PullRequest'), not( contains(variables['Build.SourceBranchName'], 'tags') ) )
   displayName: Push changelog to GitHub
 
