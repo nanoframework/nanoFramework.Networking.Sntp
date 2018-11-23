@@ -4,7 +4,7 @@ trigger:
     - master
     - develop
     - release/*
-    - refs/tags/v/*
+    - refs/tags/*
   paths:
     exclude:
     - /*.md
@@ -204,6 +204,7 @@ steps:
     githubTag: v$(MY_NUGET_VERSION)
     githubReleaseTitle: '$(nugetPackageName) Library v$(MY_NUGET_VERSION)'
     githubReleaseNotes: 'Check the [changelog]($(Build.Repository.Uri)/blob/$(Build.SourceBranchName)/CHANGELOG.md).<br><h4>Install from nanoFramework MyGet development feed</h4>The following NuGet packages are available for download from this release:<br>:package: [.NET](https://www.nuget.org/packages/$(nugetPackageName)/$(MY_NUGET_VERSION)) v$(MY_NUGET_VERSION).'
+    githubTargetCommitsh: $(Build.SourceVersion)
     githubReleaseDraft: true
     githubReleasePrerelease: true
     githubReuseDraftOnly: true
@@ -222,6 +223,7 @@ steps:
     githubTag: v$(MY_NUGET_VERSION)
     githubReleaseTitle: '$(nugetPackageName) Library v$(MY_NUGET_VERSION)'
     githubReleaseNotes: 'Check the [changelog]($(Build.Repository.Uri)/blob/$(Build.SourceBranchName)/CHANGELOG.md).<br><h4>Install from NuGet</h4>The following NuGet packages are available for download from this release:<br>:package: [.NET](https://www.nuget.org/packages/$(nugetPackageName)/$(MY_NUGET_VERSION)) v$(MY_NUGET_VERSION).'
+    githubTargetCommitsh: $(Build.SourceVersion)
     githubReleaseDraft: true
     githubReleasePrerelease: true
     githubReuseDraftOnly: true
