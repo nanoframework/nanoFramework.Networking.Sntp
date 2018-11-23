@@ -9,9 +9,10 @@ trigger:
     - /*.md
     - .gitignore
     - appveyor.yml
-  tags:
-    include:
-    - v/*
+  # waiting for feature to become available
+  # tags:
+  #   include:
+  #   - v/*
 
 pr:
   branches:
@@ -19,7 +20,7 @@ pr:
     - master
     - develop
     - release/*
-  autoCancel: false
+  autoCancel: true
 
 # add nf-tools repo to resources (for Azure Pipelines templates)
 resources:
