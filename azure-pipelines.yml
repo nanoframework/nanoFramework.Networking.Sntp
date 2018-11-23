@@ -4,6 +4,7 @@ trigger:
     - master
     - develop
     - release/*
+    - refs/tags/*
   paths:
     exclude:
     - /*.md
@@ -38,6 +39,7 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   nugetPackageName: 'nanoFramework.Networking.Sntp'
+  repoName: 'lib-nanoFramework.Networking.Sntp'
 
 steps:
 
@@ -48,10 +50,6 @@ steps:
 - script: |
     git config --global user.email "nfbot@users.noreply.github.com"
     git config --global user.name "nfbot"
-
-    echo "SourceBranchName $(Build.SourceBranchName)"
-    echo "SourceBranch $(Build.SourceBranch)"
-    echo "Reason $(Build.Reason)
   displayName: Setup git identity
 
 - task: NuGetToolInstaller@0
@@ -81,7 +79,7 @@ steps:
   inputs:
       targetType: 'inline'
       script: |
-          $MyNuGetVersion = $env:NBGV_NuGetPackageVersion -replace "\-g$env:NBGV_GitCommitIdShort", " "
+          $MyNuGetVersion = $env:NBGV_NuGetPackageVersion -replace "\-g$env:NBGV_GitCommitIdShort", ""
 
           # replace preview with alpha if this is a PR build
           if($env:Build_Reason -eq 'PullRequest')
@@ -99,15 +97,15 @@ steps:
   inputs:
     versionSpec: '>= 2.4' 
     addToPath: true
-  condition: and( succeeded(), not( contains(variables['Build.SourceBranch'], 'pull') ) )
+  condition: and( succeeded(), not( startsWith(variables['Build.SourceBranch'], 'refs/pull') ) )
   displayName: Setup Ruby
 
-# generate change log including future version
+# generate change log
 - powershell: |
       gem install github_changelog_generator --quiet --no-ri --no-rdoc
       # need to call it passing both cache options with full path otherwise it won't work
       github_changelog_generator --token $(GitHubToken) --cache-log  $env:AGENT_TEMPDIRECTORY\github-changelog-logger.log --cache-file $env:AGENT_TEMPDIRECTORY\github-changelog-http-cache
-  condition: and( succeeded(), not( contains(variables['Build.SourceBranch'], 'pull') ), not( contains(variables['Build.SourceBranch'], 'tags') ), or( eq(variables['Build.SourceBranchName'], 'master'), contains(variables['Build.SourceBranchName'], 'release') ) )
+  condition: and( succeeded(), not( startsWith(variables['Build.SourceBranch'], 'refs/pull') ), not( startsWith(variables['Build.SourceBranch'], 'refs/tags/v') ), or( eq(variables['Build.SourceBranchName'], 'master'), contains(variables['Build.SourceBranchName'], 'release') ) )
   displayName: Generate change log
 
 # generate change log including future version
@@ -115,7 +113,7 @@ steps:
       gem install github_changelog_generator --quiet --no-ri --no-rdoc
       # need to call it passing both cache options with full path otherwise it won't work
       github_changelog_generator --token $(GitHubToken) --cache-log  $env:AGENT_TEMPDIRECTORY\github-changelog-logger.log --cache-file $env:AGENT_TEMPDIRECTORY\github-changelog-http-cache --future-release v$env:MY_NUGET_VERSION
-  condition: and( succeeded(), not( contains(variables['Build.SourceBranch'], 'pull') ), not( contains(variables['Build.SourceBranch'], 'tags') ), not( or( eq(variables['Build.SourceBranchName'], 'master'), contains(variables['Build.SourceBranchName'], 'release') ) ) )
+  condition: and( succeeded(), not( startsWith(variables['Build.SourceBranch'], 'refs/pull') ), not( startsWith(variables['Build.SourceBranch'], 'refs/tags/v') ), not( or( eq(variables['Build.SourceBranchName'], 'master'), contains(variables['Build.SourceBranchName'], 'release') ) ) )
   displayName: Generate change log
 
 # copy change log to artifacts directory
@@ -124,17 +122,17 @@ steps:
     SourceFolder: '$(System.DefaultWorkingDirectory)'
     Contents: 'CHANGELOG.md'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
-  condition: and( succeeded(), not( contains(variables['Build.SourceBranch'], 'pull') ) )
+  condition: and( succeeded(), not( startsWith(variables['Build.SourceBranch'], 'refs/pull') ) )
   displayName: Copy Changelog
 
 # push new changelog to GitHub repo
 - script: |
       git add CHANGELOG.md
-      git commit -m "Update CHANGELOG for v$(NBGV_Version)"
+      git commit -m "Update CHANGELOG for v$(NBGV_Version)" -m"***NO_CI***"
       # need to wrap the git command bellow so it doesn't throw an error because of redirecting the output to stderr
       git push origin "HEAD:$(Build.SourceBranchName)" --porcelain
   workingDirectory: $(System.DefaultWorkingDirectory)
-  condition: and( succeeded(), not( contains(variables['Build.SourceBranch'], 'pull') ), not( contains(variables['Build.SourceBranch'], 'tags') ) )
+  condition: and( succeeded(), not( startsWith(variables['Build.SourceBranch'], 'refs/pull') ), not( startsWith(variables['Build.SourceBranch'], 'refs/tags/v') ) )
   displayName: Push changelog to GitHub
 
 # update could build number (only possible if this is not a PR from a fork)
@@ -182,7 +180,7 @@ steps:
   inputs:
     command: push
     nuGetFeedType: external
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg;!$(Build.ArtifactStagingDirectory)/*.symbols.nupkg'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
     publishFeedCredentials: 'MyGet'
   condition: succeeded()
   displayName: Push NuGet packages to MyGet
@@ -192,10 +190,46 @@ steps:
   inputs:
     command: push
     nuGetFeedType: external
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/$(nugetPackageName).nupkg;!$(Build.ArtifactStagingDirectory)/$(nugetPackageName).symbols.nupkg'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
     publishFeedCredentials: 'NuGet'
-  condition: and( succeeded(), not( contains(variables['Build.SourceBranch'], 'pull') ), contains(variables['Build.SourceBranch'], 'tags') )
+  condition: and( succeeded(), not( startsWith(variables['Build.SourceBranch'], 'refs/pull') ), startsWith(variables['Build.SourceBranch'], 'refs/tags/v') )
   displayName: Push NuGet packages to NuGet
+
+# create or update GitHub release
+- task: GitHubReleasePublish@1
+  inputs:
+    githubEndpoint: 'nfbot'
+    githubOwner: 'nanoframework'
+    githubRepositoryName: $(repoName)
+    githubTag: v$(MY_NUGET_VERSION)
+    githubReleaseTitle: '$(nugetPackageName) Library v$(MY_NUGET_VERSION)'
+    githubReleaseNotes: 'Check the [changelog]($(Build.Repository.Uri)/blob/$(Build.SourceBranchName)/CHANGELOG.md).<br><h4>Install from nanoFramework MyGet development feed</h4>The following NuGet packages are available for download from this release:<br>:package: [.NET](https://www.nuget.org/packages/$(nugetPackageName)/$(MY_NUGET_VERSION)) v$(MY_NUGET_VERSION).'
+    githubReleaseDraft: true
+    githubReleasePrerelease: true
+    githubReuseDraftOnly: true
+    githubReuseRelease: true
+    githubEditRelease: true
+    githubReleaseAsset: '$(Build.ArtifactStagingDirectory)/$(nugetPackageName).$(MY_NUGET_VERSION).nupkg'
+  condition: and( succeeded(), not( startsWith(variables['Build.SourceBranch'], 'refs/pull') ) )
+  displayName: Create/Update GitHub release
+
+# create or update GitHub release ON tags
+- task: GitHubReleasePublish@1
+  inputs:
+    githubEndpoint: 'nfbot'
+    githubOwner: 'nanoframework'
+    githubRepositoryName: $(repoName)
+    githubTag: v$(MY_NUGET_VERSION)
+    githubReleaseTitle: '$(nugetPackageName) Library v$(MY_NUGET_VERSION)'
+    githubReleaseNotes: 'Check the [changelog]($(Build.Repository.Uri)/blob/$(Build.SourceBranchName)/CHANGELOG.md).<br><h4>Install from NuGet</h4>The following NuGet packages are available for download from this release:<br>:package: [.NET](https://www.nuget.org/packages/$(nugetPackageName)/$(MY_NUGET_VERSION)) v$(MY_NUGET_VERSION).'
+    githubReleaseDraft: true
+    githubReleasePrerelease: true
+    githubReuseDraftOnly: true
+    githubReuseRelease: true
+    githubEditRelease: true
+    githubReleaseAsset: '$(Build.ArtifactStagingDirectory)/$(nugetPackageName).$(MY_NUGET_VERSION).nupkg'
+  condition: and( succeeded(), not( startsWith(variables['Build.SourceBranch'], 'refs/pull') ), startsWith(variables['Build.SourceBranch'], 'refs/tags/v') )
+  displayName: Create/Update GitHub release
 
 # step from template @ nf-tools repo
 # update assembly declaration in nf-interpreter
