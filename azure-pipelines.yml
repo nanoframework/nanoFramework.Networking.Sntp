@@ -1,3 +1,26 @@
+trigger:
+  branches:
+    include:
+    - master
+    - develop
+    - release/*
+  paths:
+    exclude:
+    - /*.md
+    - .gitignore
+    - appveyor.yml
+  tags:
+    include:
+    - v/*
+
+pr:
+  branches:
+    include:
+    - master
+    - develop
+    - release/*
+  autoCancel: false
+
 # add nf-tools repo to resources (for Azure Pipelines templates)
 resources:
   repositories:
@@ -5,6 +28,7 @@ resources:
       type: github
       name: nanoframework/nf-tools
       endpoint: nfbot
+
 pool:
   vmImage: 'VS2017-Win2016'
 
