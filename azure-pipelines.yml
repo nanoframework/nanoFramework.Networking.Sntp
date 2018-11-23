@@ -4,7 +4,7 @@ trigger:
     - master
     - develop
     - release/*
-    - refs/tags/*
+    - refs/tags/v/*
   paths:
     exclude:
     - /*.md
@@ -236,6 +236,7 @@ steps:
 - template: azure-pipelines-templates/update-assembly-declarations.yml@templates  
   parameters:
     sourceFile: 'nf_networking_sntp.cpp'
+    classLibName: $(nugetPackageName)
 
 # step from template @ nf-tools repo
 - template: azure-pipelines-templates/discord-webhook-task.yml@templates  
