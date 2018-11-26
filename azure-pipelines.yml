@@ -129,7 +129,6 @@ steps:
 - script: |
       git add CHANGELOG.md
       git commit -m "Update CHANGELOG for v$(NBGV_Version)" -m"***NO_CI***"
-      # need to wrap the git command bellow so it doesn't throw an error because of redirecting the output to stderr
       git push origin "HEAD:$(Build.SourceBranchName)" --porcelain
   workingDirectory: $(System.DefaultWorkingDirectory)
   condition: and( succeeded(), not( startsWith(variables['Build.SourceBranch'], 'refs/pull') ), not( startsWith(variables['Build.SourceBranch'], 'refs/tags/v') ) )
@@ -185,15 +184,15 @@ steps:
   condition: succeeded()
   displayName: Push NuGet packages to MyGet
 
-# push NuGet class lib package to NuGet (happens on tag builds for any branch)
-- task: NuGetCommand@2
-  inputs:
-    command: push
-    nuGetFeedType: external
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
-    publishFeedCredentials: 'NuGet'
-  condition: and( succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v') )
-  displayName: Push NuGet packages to NuGet
+# # push NuGet class lib package to NuGet (happens on tag builds for any branch)
+# - task: NuGetCommand@2
+#   inputs:
+#     command: push
+#     nuGetFeedType: external
+#     packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+#     publishFeedCredentials: 'NuGet'
+#   condition: and( succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v') )
+#   displayName: Push NuGet packages to NuGet
 
 # create or update GitHub release
 - task: GitHubReleasePublish@1
@@ -214,7 +213,7 @@ steps:
   condition: and( succeeded(), not( startsWith(variables['Build.SourceBranch'], 'refs/pull') ) )
   displayName: Create/Update GitHub release
 
-# create or update GitHub release ON tags
+# create or update GitHub release ON tags from release or master branches
 - task: GitHubReleasePublish@1
   inputs:
     githubEndpoint: 'nfbot'
@@ -225,12 +224,12 @@ steps:
     githubReleaseNotes: 'Check the [changelog]($(Build.Repository.Uri)/blob/$(Build.SourceBranchName)/CHANGELOG.md).<br><h4>Install from NuGet</h4>The following NuGet packages are available for download from this release:<br>:package: [.NET](https://www.nuget.org/packages/$(nugetPackageName)/$(MY_NUGET_VERSION)) v$(MY_NUGET_VERSION).'
     githubTargetCommitsh: $(Build.SourceVersion)
     githubReleaseDraft: true
-    githubReleasePrerelease: true
+    githubReleasePrerelease: false
     githubReuseDraftOnly: true
     githubReuseRelease: true
     githubEditRelease: true
     githubReleaseAsset: '$(Build.ArtifactStagingDirectory)/$(nugetPackageName).$(MY_NUGET_VERSION).nupkg'
-  condition: and( succeeded(), not( startsWith(variables['Build.SourceBranch'], 'refs/pull') ), startsWith(variables['Build.SourceBranch'], 'refs/tags/v') )
+  condition: and( succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'), or( eq(variables['Build.SourceBranchName'], 'master'), contains(variables['Build.SourceBranchName'], 'release') ) )
   displayName: Create/Update GitHub release
 
 # update assembly declaration in nf-interpreter
