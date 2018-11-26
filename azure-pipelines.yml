@@ -122,7 +122,7 @@ steps:
     SourceFolder: '$(System.DefaultWorkingDirectory)'
     Contents: 'CHANGELOG.md'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
-  condition: and( succeeded(), not( startsWith(variables['Build.SourceBranch'], 'refs/pull') ) )
+  condition: and( succeeded(), not( startsWith(variables['Build.SourceBranch'], 'refs/pull') ), not( startsWith(variables['Build.SourceBranch'], 'refs/tags/v') ) )
   displayName: Copy Changelog
 
 # push new changelog to GitHub repo
@@ -185,15 +185,15 @@ steps:
   condition: succeeded()
   displayName: Push NuGet packages to MyGet
 
-# # push NuGet class lib package to NuGet (happens on tag builds for any branch)
-# - task: NuGetCommand@2
-#   inputs:
-#     command: push
-#     nuGetFeedType: external
-#     packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
-#     publishFeedCredentials: 'NuGet'
-#   condition: and( succeeded(), not( startsWith(variables['Build.SourceBranch'], 'refs/pull') ), startsWith(variables['Build.SourceBranch'], 'refs/tags/v') )
-#   displayName: Push NuGet packages to NuGet
+# push NuGet class lib package to NuGet (happens on tag builds for any branch)
+- task: NuGetCommand@2
+  inputs:
+    command: push
+    nuGetFeedType: external
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    publishFeedCredentials: 'NuGet'
+  condition: and( succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v') )
+  displayName: Push NuGet packages to NuGet
 
 # create or update GitHub release
 - task: GitHubReleasePublish@1
@@ -233,12 +233,16 @@ steps:
   condition: and( succeeded(), not( startsWith(variables['Build.SourceBranch'], 'refs/pull') ), startsWith(variables['Build.SourceBranch'], 'refs/tags/v') )
   displayName: Create/Update GitHub release
 
-# step from template @ nf-tools repo
 # update assembly declaration in nf-interpreter
-- template: azure-pipelines-templates/update-assembly-declarations.yml@templates  
-  parameters:
-    sourceFile: 'nf_networking_sntp.cpp'
+- task: UpdateNativeAssemblyDeclaration@1
+  inputs:
+    sourceFileName: 'nf_networking_sntp.cpp'
     classLibName: $(nugetPackageName)
+    gitHubToken: $(GitHubToken)
+    nuGetVersion: $(MY_NUGET_VERSION)
+    assemblyVersion: $(NBGV_Version)
+  condition: and( succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v') )
+  displayName: Update assembly declaration in nf-interpreter
 
 # step from template @ nf-tools repo
 - template: azure-pipelines-templates/discord-webhook-task.yml@templates  
