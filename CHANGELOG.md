@@ -1,7 +1,7 @@
 # Change Log
 
-## [v1.0.2-preview-051](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/tree/v1.0.2-preview-051) (2018-12-01)
-[Full Changelog](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/compare/v1.0.2-preview-049...v1.0.2-preview-051)
+## [v1.0.2-preview-052](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/tree/v1.0.2-preview-052) (2018-12-02)
+[Full Changelog](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/compare/v1.0.2-preview-049...v1.0.2-preview-052)
 
 **Documentation and other chores:**
 
