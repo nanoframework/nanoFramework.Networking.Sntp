@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>nanoFramework.Networking.Sntp</id>
+    <version>$version$</version>
+    <title>nanoFramework.Networking.Sntp</title>
+    <authors>nanoFramework project contributors</authors>
+    <owners>nanoFramework project contributors</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <releaseNotes>
+    </releaseNotes>
+    <developmentDependency>false</developmentDependency>
+    <projectUrl>https://github.com/nanoframework</projectUrl>
+    <iconUrl>https://secure.gravatar.com/avatar/97d0e092247f0716db6d4b47b7d1d1ad</iconUrl>
+    <copyright>Copyright (c) 2018 The nanoFramework project contributors</copyright>
+    <description>This package includes the nanoFramework.Networking.Sntp assembly for nanoFramework C# projects.</description>
+    <summary>nanoFramework.Networking.Sntp assembly for nanoFramework C# projects</summary>
+    <tags>nanoFramework C# csharp netmf netnf nanoFramework.Networking.Sntp sntp</tags>
+    <dependencies>
+      <dependency id="nanoFramework.CoreLibrary" version="[1.1.0]" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="nanoFramework.Networking.Sntp\bin\Release\nanoFramework.Networking.Sntp.dll" target="lib\nanoFramework.Networking.Sntp.dll" />
+    <file src="nanoFramework.Networking.Sntp\bin\Release\nanoFramework.Networking.Sntp.pdb" target="lib\nanoFramework.Networking.Sntp.pdb" />
+    <file src="nanoFramework.Networking.Sntp\bin\Release\nanoFramework.Networking.Sntp.pdbx" target="lib\nanoFramework.Networking.Sntp.pdbx" />
+    <file src="nanoFramework.Networking.Sntp\bin\Release\nanoFramework.Networking.Sntp.pe" target="lib\nanoFramework.Networking.Sntp.pe" />
+    <file src="nanoFramework.Networking.Sntp\bin\Release\nanoFramework.Networking.Sntp.xml" target="lib\nanoFramework.Networking.Sntp.xml" />
+  </files>
+</package>
