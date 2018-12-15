@@ -3,6 +3,7 @@
 ## [v1.0.2-preview-056](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/tree/v1.0.2-preview-056) (2018-12-14)
 [Full Changelog](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/compare/v1.0.2-preview-049...v1.0.2-preview-056)
 
+## [v1.0.0](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/tree/v1.0.0) (2018-10-17)
 **Documentation and other chores:**
 
 - Bumps nanoFramework.CoreLibrary from 1.0.6-preview-021 to 1.1.0 [\#27](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/27)
