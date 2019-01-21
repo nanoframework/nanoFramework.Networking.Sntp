@@ -6,6 +6,7 @@
 
 **Documentation and other chores:**
 
+- Bumps nanoFramework.CoreLibrary from 1.1.0 to 1.1.1 [\#30](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/30)
 - Merge back from Release v1.0.2 [\#29](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/29)
 
 ## [v1.0.2](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/tree/v1.0.2) (2018-12-15)
