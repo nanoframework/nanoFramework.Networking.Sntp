@@ -12,6 +12,7 @@
 ## [v1.0.2](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/tree/v1.0.2) (2018-12-15)
 [Full Changelog](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/compare/v1.0.2-preview-049...v1.0.2)
 
+## [v1.0.0](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/tree/v1.0.0) (2018-10-17)
 **Documentation and other chores:**
 
 - Release v1.0.2 [\#28](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/28)
