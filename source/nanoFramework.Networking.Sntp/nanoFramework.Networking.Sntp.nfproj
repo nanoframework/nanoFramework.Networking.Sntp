@@ -22,7 +22,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\key.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>false</DelaySign>
@@ -52,7 +52,7 @@
   <ItemGroup>
     <Compile Include="Sntp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="..\key.snk" />
+    <None Include="key.snk" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
