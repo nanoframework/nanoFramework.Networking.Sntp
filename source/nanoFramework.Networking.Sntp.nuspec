@@ -8,18 +8,17 @@
     <owners>nanoFramework project contributors</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">Apache-2.0</license>
-    <releaseNotes>
-    </releaseNotes>
+    <releaseNotes></releaseNotes>
     <developmentDependency>false</developmentDependency>
     <projectUrl>https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp</projectUrl>
     <iconUrl>https://secure.gravatar.com/avatar/97d0e092247f0716db6d4b47b7d1d1ad</iconUrl>
     <repository type="git" url="https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp" commit="$commit$" />
     <copyright>Copyright (c) 2018 The nanoFramework project contributors</copyright>
-    <description>This package includes the nanoFramework.Networking.Sntp assembly for nanoFramework C# projects.</description>
+    <description>This package includes the nanoFramework.Networking.Sntp assembly for nanoFramework C# projects.&#10;This package requires a target with nanoFramework.Networking.Sntp v$nativeVersion$.</description>
     <summary>nanoFramework.Networking.Sntp assembly for nanoFramework C# projects</summary>
     <tags>nanoFramework C# csharp netmf netnf nanoFramework.Networking.Sntp sntp</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="[1.2.6-preview.1]" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.2.6-preview.1" />
     </dependencies>
   </metadata>
   <files>
