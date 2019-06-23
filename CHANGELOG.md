@@ -6,6 +6,7 @@
 
 **Documentation and other chores:**
 
+- Bumps nanoFramework.CoreLibrary from 1.2.6-preview.1 to 1.2.6-preview.7 [\#44](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/44)
 - Work on native assembly declaration [\#42](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/42) [[Breaking-Change](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/labels/Breaking-Change)]
 
 ## [v1.0.6-preview.9](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/tree/v1.0.6-preview.9) (2019-06-20)
