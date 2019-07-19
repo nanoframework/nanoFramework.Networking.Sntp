@@ -1,5 +1,8 @@
 # Change Log
 
+## [v1.0.7-preview.1](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/tree/v1.0.7-preview.1) (2019-07-18)
+[Full Changelog](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/compare/v1.0.6-preview.26...v1.0.7-preview.1)
+
 ## [v1.0.6-preview.26](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/tree/v1.0.6-preview.26) (2019-07-18)
 [Full Changelog](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/compare/v1.0.6-preview.23...v1.0.6-preview.26)
 
