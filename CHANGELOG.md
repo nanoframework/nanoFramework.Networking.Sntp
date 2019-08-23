@@ -8,6 +8,7 @@
 
 **Documentation and other chores:**
 
+- Bumps nanoFramework.CoreLibrary from 1.2.6-preview.7 to 1.2.6-preview.16 [\#46](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/46)
 - Update readme.txt [\#45](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/45)
 
 ## [v1.0.6-preview.23](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/tree/v1.0.6-preview.23) (2019-06-23)
@@ -106,15 +107,12 @@
 ## [v1.0.2-preview-005](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/tree/v1.0.2-preview-005) (2018-11-08)
 [Full Changelog](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/compare/v1.0.2-preview-002...v1.0.2-preview-005)
 
-**Documentation and other chores:**
-
-- Bumps nanoFramework.CoreLibrary from 1.0.5-preview024 to 1.0.6-preview-001 [\#19](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/19)
-
 ## [v1.0.2-preview-002](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/tree/v1.0.2-preview-002) (2018-11-06)
 [Full Changelog](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/compare/v1.0.2-preview-036...v1.0.2-preview-002)
 
 **Documentation and other chores:**
 
+- Bumps nanoFramework.CoreLibrary from 1.0.5-preview024 to 1.0.6-preview-001 [\#19](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/19)
 - Bumps nanoFramework.CoreLibrary from 1.0.4 to 1.0.5-preview024 [\#16](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/16)
 - merge back changes from Release 1.0.0 branch [\#14](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/14)
 
@@ -134,7 +132,6 @@
 
 **Documentation and other chores:**
 
-- Bumps nanoFramework.CoreLibrary from 1.2.6-preview.7 to 1.2.6-preview.16 [\#46](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/46)
 - Merge 'develop' for Release 1.0.0 [\#13](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/13)
 - Bumps nanoFramework.CoreLibrary from 1.0.1-preview134 to 1.0.4 [\#12](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/12)
 - Bumps nanoFramework.CoreLibrary from 1.0.1-preview127 to 1.0.1-preview134 [\#10](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/10)
