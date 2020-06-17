@@ -1,8 +1,8 @@
 # Changelog
 
-## [**Changes available only in 'Preview' NuGet packages:**](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/tree/HEAD)
+## [v1.4.0-preview.19](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/tree/v1.4.0-preview.19) (2020-06-11)
 
-[Full Changelog](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/compare/v1.4.0-preview.17...HEAD)
+[Full Changelog](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/compare/v1.4.0-preview.17...v1.4.0-preview.19)
 
 **Documentation and other chores:**
 
