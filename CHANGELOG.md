@@ -1,5 +1,17 @@
 # Changelog
 
+## [**Changes available only in 'Preview' NuGet packages:**](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/tree/HEAD)
+
+[Full Changelog](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/compare/v1.5.2-preview.1...HEAD)
+
+**Documentation and other chores:**
+
+- Update dependencies [\#83](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/83)
+
+## [v1.5.2-preview.1](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/tree/v1.5.2-preview.1) (2020-07-28)
+
+[Full Changelog](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/compare/v1.5.1-preview.1...v1.5.2-preview.1)
+
 ## [v1.5.1-preview.1](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/tree/v1.5.1-preview.1) (2020-07-27)
 
 [Full Changelog](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/compare/v1.5.0...v1.5.1-preview.1)
@@ -288,7 +300,6 @@
 
 - Bumps nanoFramework.CoreLibrary from 1.0.6-preview-021 to 1.1.0 [\#27](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/27)
 - Bumps nanoFramework.CoreLibrary from 1.0.6-preview-010 to 1.0.6-preview-021 [\#26](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/26)
-- Bumps nanoFramework.CoreLibrary from 1.0.1-preview123 to 1.0.1-preview127 [\#9](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/9)
 
 ## [v1.0.2-preview-049](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/tree/v1.0.2-preview-049) (2018-11-27)
 
@@ -374,6 +385,7 @@
 
 - Bumps nanoFramework.CoreLibrary from 1.0.1-preview134 to 1.0.4 [\#12](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/12)
 - Bumps nanoFramework.CoreLibrary from 1.0.1-preview127 to 1.0.1-preview134 [\#10](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/10)
+- Bumps nanoFramework.CoreLibrary from 1.0.1-preview123 to 1.0.1-preview127 [\#9](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/9)
 - Bumps nanoFramework.CoreLibrary from 1.0.1-preview118 to 1.0.1-preview123 [\#8](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/8)
 - 📦 Bumps nanoFramework.CoreLibrary from 1.0.1-preview106 to 1.0.1-preview118 [\#7](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/7)
 - Bump nanoFramework.CoreLibrary from 1.0.0-preview062 to 1.0.0-preview073 in /source [\#2](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/2)
