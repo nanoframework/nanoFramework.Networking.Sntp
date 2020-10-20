@@ -2,7 +2,15 @@
 
 ## [**Changes available only in 'Preview' NuGet packages:**](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/tree/HEAD)
 
-[Full Changelog](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/compare/v1.5.2-preview.12...HEAD)
+[Full Changelog](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/compare/v1.5.2-preview.14...HEAD)
+
+**Documentation and other chores:**
+
+- Bumps nanoFramework.CoreLibrary from 1.9.1-preview.4 to 1.9.1-preview.6 [\#86](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/pull/86)
+
+## [v1.5.2-preview.14](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/tree/v1.5.2-preview.14) (2020-10-20)
+
+[Full Changelog](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/compare/v1.5.2-preview.12...v1.5.2-preview.14)
 
 **Documentation and other chores:**
 
