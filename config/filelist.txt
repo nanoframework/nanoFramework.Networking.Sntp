@@ -1,1 +1,1 @@
-nanoFramework.Networking.Sntp.*
+**/nanoFramework.Networking.Sntp.*
