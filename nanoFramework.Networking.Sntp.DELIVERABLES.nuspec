@@ -18,7 +18,7 @@
     <tags>
     </tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.10.0-preview.4" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.10.1-preview.6" />
     </dependencies>
   </metadata>
   <files>
@@ -28,7 +28,6 @@
     <file src="nanoFramework.Networking.Sntp\obj\Release\*.strings" target="content\dump\" />
     <file src="nanoFramework.Networking.Sntp\obj\Release\*.resources" target="content\resources\" />
     <file src="nanoFramework.Networking.Sntp\obj\Release\*.il" target="content\disasm\" />
-
     <file src="assets\nf-logo.png" target="" />
     <file src="LICENSE.md" target="" />
   </files>

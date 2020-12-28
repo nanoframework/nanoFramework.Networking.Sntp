@@ -19,7 +19,7 @@
 This package requires a target with nanoFramework.Networking.Sntp v$nativeVersion$ (checksum $checksum$).</description>
     <tags>nanoFramework C# csharp netmf netnf nanoFramework.Networking.Sntp sntp</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.10.0-preview.4" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.10.1-preview.6" />
     </dependencies>
   </metadata>
   <files>
@@ -28,7 +28,6 @@ This package requires a target with nanoFramework.Networking.Sntp v$nativeVersio
     <file src="nanoFramework.Networking.Sntp\bin\Release\nanoFramework.Networking.Sntp.pdbx" target="lib\nanoFramework.Networking.Sntp.pdbx" />
     <file src="nanoFramework.Networking.Sntp\bin\Release\nanoFramework.Networking.Sntp.pe" target="lib\nanoFramework.Networking.Sntp.pe" />
     <file src="nanoFramework.Networking.Sntp\bin\Release\nanoFramework.Networking.Sntp.xml" target="lib\nanoFramework.Networking.Sntp.xml" />
-
     <file src="assets\readme.txt" target="" />
     <file src="assets\nf-logo.png" target="" />
     <file src="LICENSE.md" target="" />
