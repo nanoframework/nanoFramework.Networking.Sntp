@@ -45,6 +45,6 @@ jobs:
             [version update]
             
             ### :warning: This is an automated update. :warning:
-          committer: 'nfbot <nanoframework@outlook.com>'
+          committer: 'nfbot <dependencybot@nanoframework.net>'
           branch: ${{ env.BRANCH_NAME }}
           path: main
