@@ -48,3 +48,5 @@ jobs:
           committer: 'nfbot <dependencybot@nanoframework.net>'
           branch: ${{ env.BRANCH_NAME }}
           path: main
+          labels: |
+            Type: dependencies
