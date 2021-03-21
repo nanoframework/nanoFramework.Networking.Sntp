@@ -1,8 +1,8 @@
 # Changelog
 
-## [**Changes available only in 'Preview' NuGet packages:**](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/tree/HEAD)
+## [v1.5.3-preview.17](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/tree/v1.5.3-preview.17) (2021-03-02)
 
-[Full Changelog](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/compare/v1.5.3-preview.10...HEAD)
+[Full Changelog](https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp/compare/v1.5.3-preview.10...v1.5.3-preview.17)
 
 **Documentation and other chores:**
 
