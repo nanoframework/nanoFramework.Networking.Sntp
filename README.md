@@ -11,7 +11,7 @@
 | Component | Build Status | NuGet Package |
 |:-|---|---|
 | nanoFramework.Networking.Sntp | [![Build Status](https://dev.azure.com/nanoframework/nanoFramework.Networking.Sntp/_apis/build/status/nanoframework.lib-nanoFramework.Networking.Sntp?branchName=develop)](https://dev.azure.com/nanoframework/nanoFramework.Networking.Sntp/_build/latest?definitionId=1?branchName=main) | [![NuGet](https://img.shields.io/nuget/v/nanoFramework.Networking.Sntp.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Networking.Sntp/) |
-| nanoFramework.Networking.Sntp (preview) | [![Build Status](https://dev.azure.com/nanoframework/nanoFramework.Networking.Sntp/_apis/build/status/nanoframework.lib-nanoFramework.Networking.Sntp?branchName=develop)](https://dev.azure.com/nanoframework/nanoFramework.Networking.Sntp/_build/latest?definitionId=1?branchName=develop) | [![](https://badgen.net/badge/NuGet/preview/D7B023?icon=https://simpleicons.now.sh/azuredevops/fff)](https://dev.azure.com/nanoframework/feed/_packaging?_a=package&feed=sandbox&package=nanoFramework.Networking.Sntp&protocolType=NuGet&view=overview) |
+| nanoFramework.Networking.Sntp (preview) | [![Build Status](https://dev.azure.com/nanoframework/nanoFramework.Networking.Sntp/_apis/build/status/nanoframework.lib-nanoFramework.Networking.Sntp?branchName=develop)](https://dev.azure.com/nanoframework/nanoFramework.Networking.Sntp/_build/latest?definitionId=1?branchName=develop) | [![NuGet](https://img.shields.io/nuget/vpre/nanoFramework.Networking.Sntp.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.Networking.Sntp/) |
 
 ## Feedback and documentation
 
