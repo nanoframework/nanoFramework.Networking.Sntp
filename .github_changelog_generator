@@ -1,5 +1,5 @@
 user=nanoframework
-project=lib-nanoFramework.Networking.Sntp
+project=nanoFramework.Networking.Sntp
 issues=true
 add_issues_wo_labels=false
 add_pr_wo_labels=false

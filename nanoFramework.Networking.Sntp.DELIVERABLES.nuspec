@@ -11,7 +11,7 @@
     <releaseNotes>
     </releaseNotes>
     <developmentDependency>false</developmentDependency>
-    <projectUrl>https://github.com/nanoframework/lib-nanoFramework.Networking.Sntp</projectUrl>
+    <projectUrl>https://github.com/nanoframework/nanoFramework.Networking.Sntp</projectUrl>
     <icon>nf-logo.png</icon>
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
     <description>** DON'T REFERENCE THIS PACKAGE ** Not meant for development. This package includes the deliverable artifacts of the nanoFramework.Networking.Sntp assembly for nanoFramework. These are for testing purposes and for updating the native code base of the library.</description>
