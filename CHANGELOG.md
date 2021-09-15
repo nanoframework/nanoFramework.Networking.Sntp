@@ -1,5 +1,9 @@
 # Changelog
 
+## [v1.5.6-preview.1](https://github.com/nanoframework/nanoFramework.Networking.Sntp/tree/v1.5.6-preview.1) (2021-09-13)
+
+[Full Changelog](https://github.com/nanoframework/nanoFramework.Networking.Sntp/compare/v1.5.5-preview.1...v1.5.6-preview.1)
+
 ## [v1.5.5-preview.1](https://github.com/nanoframework/nanoFramework.Networking.Sntp/tree/v1.5.5-preview.1) (2021-09-13)
 
 [Full Changelog](https://github.com/nanoframework/nanoFramework.Networking.Sntp/compare/v1.5.3...v1.5.5-preview.1)
