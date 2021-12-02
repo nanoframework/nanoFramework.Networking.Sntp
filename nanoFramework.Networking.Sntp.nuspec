@@ -20,7 +20,7 @@
 This package requires a target with nanoFramework.Networking.Sntp v$nativeVersion$ (checksum $checksum$).</description>
     <tags>nanoFramework C# csharp netmf netnf nanoFramework.Networking.Sntp sntp</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.11.6-preview.2" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.11.7" />
     </dependencies>
   </metadata>
   <files>
