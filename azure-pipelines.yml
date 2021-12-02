@@ -2,11 +2,13 @@ trigger:
   branches:
     include: [main, develop, "release-*" ]
   paths:
-    exclude: ["*.md", .gitignore]
+    exclude: [README.md, LICENSE.md, NuGet.Config, .github_changelog_generator, .gitignore]
   tags:
     include: ["v*"]
 
 # PR always trigger build
+pr:
+  autoCancel: true
 
 # add nf-tools repo to resources (for Azure Pipelines templates)
 resources:
@@ -20,12 +22,11 @@ pool:
   vmImage: 'windows-2019'
 
 variables:
-  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
-  solution: '**/*.sln'
+  DOTNET_NOLOGO: true
+  solution: 'nanoFramework.Networking.Sntp.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   nugetPackageName: 'nanoFramework.Networking.Sntp'
-  repoName: 'nanoFramework.Networking.Sntp'
 
 steps:
 
