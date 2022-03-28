@@ -2,6 +2,58 @@
 
 ## [v1.5.7-preview.7](https://github.com/nanoframework/nanoFramework.Networking.Sntp/tree/v1.5.7-preview.7) (2021-12-02)
 
+[Full Changelog](https://github.com/nanoframework/nanoFramework.Networking.Sntp/compare/v1.5.8-preview.13...HEAD)
+
+**Documentation and other chores:**
+
+- Update 1 NuGet dependencies [\#116](https://github.com/nanoframework/nanoFramework.Networking.Sntp/pull/116)
+
+## [v1.5.8-preview.13](https://github.com/nanoframework/nanoFramework.Networking.Sntp/tree/v1.5.8-preview.13) (2022-03-17)
+
+[Full Changelog](https://github.com/nanoframework/nanoFramework.Networking.Sntp/compare/v1.5.8-preview.11...v1.5.8-preview.13)
+
+**Documentation and other chores:**
+
+- Update 1 NuGet dependencies [\#115](https://github.com/nanoframework/nanoFramework.Networking.Sntp/pull/115)
+
+## [v1.5.8-preview.11](https://github.com/nanoframework/nanoFramework.Networking.Sntp/tree/v1.5.8-preview.11) (2022-03-14)
+
+[Full Changelog](https://github.com/nanoframework/nanoFramework.Networking.Sntp/compare/v1.5.8-preview.8...v1.5.8-preview.11)
+
+**Documentation and other chores:**
+
+- Update 1 NuGet dependencies [\#114](https://github.com/nanoframework/nanoFramework.Networking.Sntp/pull/114)
+
+## [v1.5.8-preview.8](https://github.com/nanoframework/nanoFramework.Networking.Sntp/tree/v1.5.8-preview.8) (2022-02-17)
+
+[Full Changelog](https://github.com/nanoframework/nanoFramework.Networking.Sntp/compare/v1.5.8-preview.6...v1.5.8-preview.8)
+
+**Documentation and other chores:**
+
+- Update 1 NuGet dependencies [\#113](https://github.com/nanoframework/nanoFramework.Networking.Sntp/pull/113)
+
+## [v1.5.8-preview.6](https://github.com/nanoframework/nanoFramework.Networking.Sntp/tree/v1.5.8-preview.6) (2022-01-28)
+
+[Full Changelog](https://github.com/nanoframework/nanoFramework.Networking.Sntp/compare/v1.5.8-preview.4...v1.5.8-preview.6)
+
+**Documentation and other chores:**
+
+- Update 1 NuGet dependencies [\#112](https://github.com/nanoframework/nanoFramework.Networking.Sntp/pull/112)
+
+## [v1.5.8-preview.4](https://github.com/nanoframework/nanoFramework.Networking.Sntp/tree/v1.5.8-preview.4) (2022-01-20)
+
+[Full Changelog](https://github.com/nanoframework/nanoFramework.Networking.Sntp/compare/v1.5.7...v1.5.8-preview.4)
+
+**Documentation and other chores:**
+
+- Update 1 NuGet dependencies [\#111](https://github.com/nanoframework/nanoFramework.Networking.Sntp/pull/111)
+
+## [v1.5.7](https://github.com/nanoframework/nanoFramework.Networking.Sntp/tree/v1.5.7) (2021-12-02)
+
+[Full Changelog](https://github.com/nanoframework/nanoFramework.Networking.Sntp/compare/v1.5.7-preview.7...v1.5.7)
+
+## [v1.5.7-preview.7](https://github.com/nanoframework/nanoFramework.Networking.Sntp/tree/v1.5.7-preview.7) (2021-12-02)
+
 [Full Changelog](https://github.com/nanoframework/nanoFramework.Networking.Sntp/compare/v1.5.7-preview.5...v1.5.7-preview.7)
 
 **Documentation and other chores:**
