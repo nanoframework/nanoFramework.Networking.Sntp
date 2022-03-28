@@ -1,6 +1,6 @@
 # Changelog
 
-## [**Changes available only in 'Preview' NuGet packages:**](https://github.com/nanoframework/nanoFramework.Networking.Sntp/tree/HEAD)
+## [v1.5.7-preview.7](https://github.com/nanoframework/nanoFramework.Networking.Sntp/tree/v1.5.7-preview.7) (2021-12-02)
 
 [Full Changelog](https://github.com/nanoframework/nanoFramework.Networking.Sntp/compare/v1.5.8-preview.13...HEAD)
 
