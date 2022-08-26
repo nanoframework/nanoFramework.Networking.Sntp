@@ -1,0 +1,8 @@
+name: Check packages.lock existence
+
+on:
+  pull_request:
+
+jobs:
+  perform_checks:
+    uses: nanoframework/nf-tools/.github/workflows/check-package-lock.yml@main
