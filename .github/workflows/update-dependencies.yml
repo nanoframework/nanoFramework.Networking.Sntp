@@ -2,8 +2,9 @@
 # See LICENSE file in the project root for full license information.
 
 # This workflow will periodically check .NET nanoFramework dependencies and updates them in the repository it's running.
+# Can also be triggered by a repository dispatch event.
 
-name: Daily update dependencies
+name: Update .NET nanoFramework dependencies
 
 on:
   schedule:
@@ -12,28 +13,9 @@ on:
   repository_dispatch:
     types: update-dependencies
 
-defaults:
-  run:
-    shell: pwsh
-
 jobs:
-  update-dotnet-preview:
-    name: Update .NET nanoFramework dependencies
-    timeout-minutes: 15
-    runs-on: windows-latest
-    env:
-      GITHUB_TOKEN: ${{ github.token }}
-      SOLUTION: 'nanoFramework.Networking.Sntp.sln'
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - uses: actions/cache@v3
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
-      - name: Update dependencies
-        uses: nanoframework/nanodu@v1
-        with:
-          solutionsToCheck: ${{ env.SOLUTION }}
+  update-dependencies:
+    name: nanoFramework
+    uses: nanoframework/nf-tools/.github/workflows/update-dependencies.yml@main
+    with:
+      solutionsToCheck: 'nanoFramework.Networking.Sntp.sln'
