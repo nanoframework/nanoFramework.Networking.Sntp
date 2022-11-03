@@ -62,4 +62,3 @@ steps:
     webhookUrl: '$(DiscordWebhook)'
     message: ''
 
-
