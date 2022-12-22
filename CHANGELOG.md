@@ -1,5 +1,17 @@
 # Changelog
 
+## [**Changes available only in 'Preview' NuGet packages:**](https://github.com/nanoframework/nanoFramework.Networking.Sntp/tree/HEAD)
+
+[Full Changelog](https://github.com/nanoframework/nanoFramework.Networking.Sntp/compare/v1.6.16...HEAD)
+
+**Documentation and other chores:**
+
+- Update 1 NuGet dependencies [\#126](https://github.com/nanoframework/nanoFramework.Networking.Sntp/pull/126)
+
+## [v1.6.16](https://github.com/nanoframework/nanoFramework.Networking.Sntp/tree/v1.6.16) (2022-12-22)
+
+[Full Changelog](https://github.com/nanoframework/nanoFramework.Networking.Sntp/compare/v1.6.14...v1.6.16)
+
 ## [v1.6.14](https://github.com/nanoframework/nanoFramework.Networking.Sntp/tree/v1.6.14) (2022-12-22)
 
 [Full Changelog](https://github.com/nanoframework/nanoFramework.Networking.Sntp/compare/v1.6.1...v1.6.14)
