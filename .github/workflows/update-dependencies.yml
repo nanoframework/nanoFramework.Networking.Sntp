@@ -8,8 +8,8 @@ name: Update .NET nanoFramework dependencies
 
 on:
   schedule:
-  # At 00:00 UTC every day.
-  - cron:  '00 00 * * *'
+  # At 00:10 UTC every Mon and Thu.
+  - cron:  '00 10 * * Mon,Thu'
   repository_dispatch:
     types: update-dependencies
 
@@ -17,7 +17,6 @@ jobs:
   update-dependencies:
     name: nanoFramework
     uses: nanoframework/nf-tools/.github/workflows/update-dependencies.yml@main
+    secrets: inherit
     with:
       solutionsToCheck: 'nanoFramework.Networking.Sntp.sln'
-    secrets:
-      githubAuth: ${{ secrets.NFBOT_GITHUB_ACTIONS }}
