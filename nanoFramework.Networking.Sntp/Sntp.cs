@@ -14,7 +14,7 @@ namespace nanoFramework.Networking
     /// For a list of some public NTP servers, see this link :
     /// http://support.ntp.org/bin/view/Servers/NTPPoolServers
     /// </remarks>
-    public class Sntp
+    public static class Sntp
     {
         /// <summary>
         /// Starts the SNTP client.
@@ -67,6 +67,19 @@ namespace nanoFramework.Networking
         /// Gets, sets the address of the SNTP server 2.
         /// </summary>
         public static extern string Server2
+        {
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            get;
+
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            set;
+        }
+
+        /// <summary>
+        /// Gets, sets the update interval of the SNTP client (in minutes).
+        /// </summary>
+        /// <remarks>This method is specific to nanoFramework.</remarks>
+        public static extern int UpdateInterval
         {
             [MethodImpl(MethodImplOptions.InternalCall)]
             get;
