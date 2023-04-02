@@ -85,40 +85,40 @@ namespace nanoFramework.Networking
             set;
         }
 
-        /// <summary>
-        /// Gets or Sets the update interval of the SNTP client (in milliseconds) from when the service was started.
-        /// </summary>
-        public static extern int UpdateInterval
-        {
-            [MethodImpl(MethodImplOptions.InternalCall)]
-            get;
+        // /// <summary>
+        // /// Gets or Sets the update interval of the SNTP client (in milliseconds) from when the service was started.
+        // /// </summary>
+        // public static extern int UpdateInterval
+        // {
+        //     [MethodImpl(MethodImplOptions.InternalCall)]
+        //     get;
 
-            [MethodImpl(MethodImplOptions.InternalCall)]
-            set;
-        }
+        //     [MethodImpl(MethodImplOptions.InternalCall)]
+        //     set;
+        // }
 
-        /// <summary>
-        /// Gets or Sets the Startup delay of the SNTP client (in milliseconds) when the service is started.
-        /// </summary>
-        public static extern int StartupDelay
-        {
-            [MethodImpl(MethodImplOptions.InternalCall)]
-            get;
+        // /// <summary>
+        // /// Gets or Sets the Startup delay of the SNTP client (in milliseconds) when the service is started.
+        // /// </summary>
+        // public static extern int StartupDelay
+        // {
+        //     [MethodImpl(MethodImplOptions.InternalCall)]
+        //     get;
 
-            [MethodImpl(MethodImplOptions.InternalCall)]
-            set;
-        }
+        //     [MethodImpl(MethodImplOptions.InternalCall)]
+        //     set;
+        // }
 
-        /// <summary>
-        /// Gets or Sets the amount of retry attempts of the SNTP client will use.
-        /// </summary>
-        public static extern short RetryAttempts
-        {
-            [MethodImpl(MethodImplOptions.InternalCall)]
-            get;
+        // /// <summary>
+        // /// Gets or Sets the Retry period (in milliseconds) the SNTP client will use.
+        // /// </summary>
+        // public static extern short RetryPeriod
+        // {
+        //     [MethodImpl(MethodImplOptions.InternalCall)]
+        //     get;
 
-            [MethodImpl(MethodImplOptions.InternalCall)]
-            set;
-        }
+        //     [MethodImpl(MethodImplOptions.InternalCall)]
+        //     set;
+        // }
     }
 }
