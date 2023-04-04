@@ -116,7 +116,7 @@ namespace nanoFramework.Networking
         /// <summary>
         /// Gets or Sets the Retry period (in milliseconds) the SNTP client will use.
         /// </summary>
-        public static extern short RetryPeriod
+        public static extern int RetryPeriod
         {
             [MethodImpl(MethodImplOptions.InternalCall)]
             get;
