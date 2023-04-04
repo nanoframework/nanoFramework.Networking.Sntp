@@ -74,7 +74,7 @@ namespace nanoFramework.Networking
 
         /// <summary>
         /// Gets, sets the host address of the backup SNTP server.
-        /// By default it uses the server '1.pool.ntp.org'
+        /// By default it uses the server '1.pool.ntp.org'.
         /// </summary>
         /// <remarks>
         /// For a list of some public NTP servers, see this link :
