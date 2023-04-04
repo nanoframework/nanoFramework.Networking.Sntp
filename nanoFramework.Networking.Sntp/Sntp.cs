@@ -23,7 +23,9 @@ namespace nanoFramework.Networking
         /// <para>
         ///  The system time is updated immediately after each successful execution.
         /// </para>
+        /// <para>
         /// By default the time synchronization occurs on a hourly rate.
+        /// </para>
         /// </remarks>
         [MethodImpl(MethodImplOptions.InternalCall)]
         public static extern void Start();
