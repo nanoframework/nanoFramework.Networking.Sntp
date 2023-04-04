@@ -60,7 +60,7 @@ namespace nanoFramework.Networking
         /// By default it uses the server '0.pool.ntp.org'.
         /// </summary>
         /// <remarks>
-        /// For a list of some public NTP servers, see this link :
+        /// For a list of some public NTP servers, see this link:
         /// http://support.ntp.org/bin/view/Servers/NTPPoolServers
         /// </remarks>
         public static extern string Server1
