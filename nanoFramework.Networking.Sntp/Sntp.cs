@@ -56,7 +56,7 @@ namespace nanoFramework.Networking
         }
 
         /// <summary>
-        /// Gets, sets the host address of the main SNTP server.
+        /// Gets or sets the host address of the main SNTP server.
         /// By default it uses the server '0.pool.ntp.org'.
         /// </summary>
         /// <remarks>
