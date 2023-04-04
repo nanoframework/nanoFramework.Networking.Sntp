@@ -11,7 +11,7 @@ namespace nanoFramework.Networking
     /// Provides a set of methods that help manage the Simple Network Time Protocol (SNTP) client on the target device.
     /// </summary>
     /// <remarks>
-    /// This class is specific to nanoFramework.
+    /// This class is specific to .NET nanoFramework.
     /// </remarks>
     public static class Sntp
     {
