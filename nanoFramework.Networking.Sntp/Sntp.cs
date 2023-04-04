@@ -13,7 +13,7 @@ namespace nanoFramework.Networking
     /// <remarks>
     /// This class is specific to .NET nanoFramework.
     /// </remarks>
-    public static class Sntp
+    public class Sntp
     {
         /// <summary>
         /// Starts the SNTP client.
