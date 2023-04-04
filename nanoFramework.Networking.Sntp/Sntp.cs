@@ -20,7 +20,9 @@ namespace nanoFramework.Networking
         /// After this method returns, a periodic call to the set SNTP servers is performed providing time synchronization.
         /// </summary>
         /// <remarks>
-        /// The system time is updated immediately after each successful execution.
+        /// <para>
+        ///  The system time is updated immediately after each successful execution.
+        /// </para>
         /// By default the time synchronization occurs on a hourly rate.
         /// </remarks>
         [MethodImpl(MethodImplOptions.InternalCall)]
