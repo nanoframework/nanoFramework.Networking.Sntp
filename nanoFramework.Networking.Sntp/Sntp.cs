@@ -8,21 +8,25 @@ using System.Runtime.CompilerServices;
 namespace nanoFramework.Networking
 {
     /// <summary>
-    /// Provides a set of methods that help developers to manage the SNTP (Simple Network Time Protocol) client on the target device.
+    /// Provides a set of methods that help manage the Simple Network Time Protocol (SNTP) client on the target device.
     /// </summary>
     /// <remarks>
-    /// For a list of some public NTP servers, see this link :
-    /// http://support.ntp.org/bin/view/Servers/NTPPoolServers
+    /// This class is specific to .NET nanoFramework.
     /// </remarks>
     public class Sntp
     {
         /// <summary>
         /// Starts the SNTP client.
-        /// After this method returns a periodic call to the set SNTP servers is performed providing time synchronization.
-        /// The system time is updated immediately after each successful execution.
-        /// The time synchronization occurs on a hourly rate.
+        /// After this method returns, a periodic call to the set SNTP servers is performed providing time synchronization.
         /// </summary>
-        /// <remarks>This method is specific to nanoFramework.</remarks>
+        /// <remarks>
+        /// <para>
+        ///  The system time is updated immediately after each successful execution.
+        /// </para>
+        /// <para>
+        /// By default the time synchronization occurs on a hourly rate.
+        /// </para>
+        /// </remarks>
         [MethodImpl(MethodImplOptions.InternalCall)]
         public static extern void Start();
 
@@ -52,8 +56,13 @@ namespace nanoFramework.Networking
         }
 
         /// <summary>
-        /// Gets, sets the address of the SNTP server 1.
+        /// Gets or sets the host address of the main SNTP server.
+        /// By default it uses the server '0.pool.ntp.org'.
         /// </summary>
+        /// <remarks>
+        /// For a list of some public NTP servers, see this link:
+        /// http://support.ntp.org/bin/view/Servers/NTPPoolServers
+        /// </remarks>
         public static extern string Server1
         {
             [MethodImpl(MethodImplOptions.InternalCall)]
@@ -64,8 +73,13 @@ namespace nanoFramework.Networking
         }
 
         /// <summary>
-        /// Gets, sets the address of the SNTP server 2.
+        /// Gets or sets the host address of the backup SNTP server.
+        /// By default it uses the server '1.pool.ntp.org'.
         /// </summary>
+        /// <remarks>
+        /// For a list of some public NTP servers, see this link:
+        /// http://support.ntp.org/bin/view/Servers/NTPPoolServers
+        /// </remarks>
         public static extern string Server2
         {
             [MethodImpl(MethodImplOptions.InternalCall)]
