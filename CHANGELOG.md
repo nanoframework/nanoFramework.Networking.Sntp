@@ -2,7 +2,19 @@
 
 ## [**Changes available only in 'Preview' NuGet packages:**](https://github.com/nanoframework/nanoFramework.Networking.Sntp/tree/HEAD)
 
-[Full Changelog](https://github.com/nanoframework/nanoFramework.Networking.Sntp/compare/v1.6.16...HEAD)
+[Full Changelog](https://github.com/nanoframework/nanoFramework.Networking.Sntp/compare/v1.6.18...HEAD)
+
+**Documentation and other chores:**
+
+- Update 1 NuGet dependencies [\#132](https://github.com/nanoframework/nanoFramework.Networking.Sntp/pull/132)
+- Update 1 NuGet dependencies [\#131](https://github.com/nanoframework/nanoFramework.Networking.Sntp/pull/131)
+- Update 1 NuGet dependencies [\#130](https://github.com/nanoframework/nanoFramework.Networking.Sntp/pull/130)
+- Update 1 NuGet dependencies [\#129](https://github.com/nanoframework/nanoFramework.Networking.Sntp/pull/129)
+- Improve comments for Intellisense  [\#127](https://github.com/nanoframework/nanoFramework.Networking.Sntp/pull/127)
+
+## [v1.6.18](https://github.com/nanoframework/nanoFramework.Networking.Sntp/tree/v1.6.18) (2022-12-22)
+
+[Full Changelog](https://github.com/nanoframework/nanoFramework.Networking.Sntp/compare/v1.6.16...v1.6.18)
 
 **Documentation and other chores:**
 
