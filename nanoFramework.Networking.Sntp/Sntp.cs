@@ -2,7 +2,7 @@
 // Copyright (c) .NET Foundation and Contributors
 // See LICENSE file in the project root for full license information.
 //
-
+ 
 using System.Runtime.CompilerServices;
 
 namespace nanoFramework.Networking
@@ -25,10 +25,10 @@ namespace nanoFramework.Networking
         /// </para>
         /// <para>
         /// By default the time synchronization occurs on a hourly rate.
-        /// </para>
+        /// </para> 
         /// </remarks>
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public static extern void Start();
+        public static extern void Start() ;
 
         /// <summary>
         /// Stops the SNTP client.
@@ -44,7 +44,7 @@ namespace nanoFramework.Networking
         /// This performs a restart of the internal service.
         /// </remarks>
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public static extern void UpdateNow();
+        public static  extern void UpdateNow( );
 
         /// <summary>
         /// Get status of SNTP client.
