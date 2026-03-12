@@ -1,0 +1,22 @@
+# Copyright (c) .NET Foundation and Contributors
+# See LICENSE file in the project root for full license information.
+
+name: Dependency Submission
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  dependency-submission:
+    name: Component Detection
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Detect and submit dependencies
+        uses: advanced-security/component-detection-dependency-submission-action@v0.0.2
