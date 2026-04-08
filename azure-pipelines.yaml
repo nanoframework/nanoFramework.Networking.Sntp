@@ -10,6 +10,7 @@ trigger:
   paths:
     exclude:
       - .gitignore
+      - .coderabbit.yaml
       - CHANGELOG.md
       - LICENSE.md
       - README.md
