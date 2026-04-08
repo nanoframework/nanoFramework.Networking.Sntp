@@ -1,4 +1,4 @@
-# Copyright (c) .NET Foundation and Contributors
+﻿# Copyright (c) .NET Foundation and Contributors
 # See LICENSE file in the project root for full license information.
 
 trigger:
@@ -10,6 +10,7 @@ trigger:
   paths:
     exclude:
       - .gitignore
+      - .coderabbit.yaml
       - CHANGELOG.md
       - LICENSE.md
       - README.md
