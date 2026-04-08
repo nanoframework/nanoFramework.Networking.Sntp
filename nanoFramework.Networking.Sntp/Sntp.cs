@@ -88,5 +88,13 @@ namespace nanoFramework.Networking
             [MethodImpl(MethodImplOptions.InternalCall)]
             set;
         }
+
+        public static extern string Server3
+        {
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            get;
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            set;
+        }
     }
 }
