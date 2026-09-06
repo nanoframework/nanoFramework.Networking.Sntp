@@ -13,7 +13,7 @@ namespace nanoFramework.Networking
     /// <remarks>
     /// This class is specific to .NET nanoFramework.
     /// </remarks>
-    public class Sntp
+    public static class Sntp
     {
         /// <summary>
         /// Starts the SNTP client.
@@ -81,6 +81,42 @@ namespace nanoFramework.Networking
         /// http://support.ntp.org/bin/view/Servers/NTPPoolServers
         /// </remarks>
         public static extern string Server2
+        {
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            get;
+
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            set;
+        }
+        
+        /// <summary>
+        /// Gets or Sets the update interval of the SNTP client (in milliseconds) from when the service was started.
+        /// </summary>
+        public static extern int UpdateInterval
+        {
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            get;
+
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            set;
+        }
+
+        /// <summary>
+        /// Gets or Sets the Startup delay of the SNTP client (in milliseconds) when the service is started.
+        /// </summary>
+        public static extern int StartupDelay
+        {
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            get;
+
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            set;
+        }
+
+        /// <summary>
+        /// Gets or Sets the Retry period (in milliseconds) the SNTP client will use.
+        /// </summary>
+        public static extern int RetryPeriod
         {
             [MethodImpl(MethodImplOptions.InternalCall)]
             get;
